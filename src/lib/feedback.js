@@ -22,3 +22,6 @@ export function saveSubmission(name, message) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(submissions));
   return submissions;
 }
+
+// temp check
+export function tmpHelper(n){ return n + " items"; }
