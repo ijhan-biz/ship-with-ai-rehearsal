@@ -8,10 +8,15 @@ import Layout from '../../layouts/Layout.astro';
     <em>supply chain</em> continuously:
   </p>
   <ul>
-    <li><strong>Dependabot alerts</strong> — flags the outdated Markdown renderer this site's feedback widget depends on, and opens the upgrade PR</li>
-    <li><strong>Dependency review</strong> — blocks a pull request from introducing a new vulnerable dependency</li>
-    <li><strong>Secret scanning with push protection</strong> — catches a credential before it's committed, and flags one that already was</li>
+    <li><strong>Dependabot</strong> — alerts can identify vulnerable dependencies; eligible security updates can propose fixes when enabled. The outdated <code>marked@0.3.19</code> seed exists only in historical baseline <code>05cdada</code>, not this safe version.</li>
+    <li><strong>Dependency review</strong> — can be configured as a required PR check; it is not included in this rehearsal's build workflow.</li>
+    <li><strong>Secret scanning with push protection</strong> — can flag supported secret patterns and block pushes. Detection of the historical fake placeholder was not verified, and the placeholder has been removed from this safe version.</li>
   </ul>
+  <p>
+    Upgrading Marked addresses known dependency advisories, not all XSS. Marked does not sanitize
+    HTML. This feedback widget also sanitizes rendered Markdown with DOMPurify and constructs
+    name and timestamp text without inserting user-provided HTML.
+  </p>
   <p>
     Where Copilot Code Review looks at a diff, this layer looks at the whole dependency graph and
     commit history — the exact surface OWASP's A03: Software Supply Chain Failures is about.

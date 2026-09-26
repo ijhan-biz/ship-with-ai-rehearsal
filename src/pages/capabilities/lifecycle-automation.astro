@@ -4,18 +4,20 @@ import Layout from '../../layouts/Layout.astro';
 <Layout title="End-to-end Lifecycle Automation">
   <h1>End-to-end lifecycle automation</h1>
   <p>
-    Zoom out from any one beat and this is the whole loop, running automatically on every future
-    change to this repo:
+    The intended lifecycle can include issue delegation, code review, security checks, and
+    deployment. This rehearsal does not claim that the entire loop has been demonstrated:
   </p>
-  <pre>Issue → Copilot drafts PR → Copilot Code Review → Agent Merge →
-GitHub Actions (build + supply-chain security + deploy) → GitHub Pages</pre>
+  <pre>Issue → cloud agent: unverified
+Automatic Copilot Code Review: demonstrated independently
+Agent Merge: unverified; manual approved merge for this rehearsal
+GitHub Actions: tests → audit → build → deploy on main push only</pre>
   <p>
-    You set this up once, on this repo, in an afternoon. From then on, every feature request,
-    every dependency bump, every content change moves through the same reviewed, secured,
-    deployed path — with no step depending on someone remembering to do it.
+    Local passing checks are not evidence of a successful remote workflow or deployment.
+    Verify each step and its actor from actual results before presenting it as completed.
+    PR and manual-dispatch runs do not publish this site.
   </p>
   <p>
-    That's the payoff of "shipping with AI": not that AI writes the code, but that the whole
-    pipeline around the code keeps itself healthy.
+    That's the goal of "shipping with AI": useful assistance backed by review, repeatable checks,
+    and explicit release approval, rather than assuming that automation takes responsibility.
   </p>
 </Layout>

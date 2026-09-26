@@ -7,8 +7,7 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - "dependencies"
-    # Repo setting "Allow auto-merge" + Agent Merge handle merging a passing
-    # version-bump PR without a human click — see RUNSHEET.md Beat 2.
+    # Updates still require review and an approved merge; this is not Agent Merge.
 
   - package-ecosystem: "github-actions"
     directory: "/"
