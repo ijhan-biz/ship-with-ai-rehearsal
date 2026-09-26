@@ -103,7 +103,7 @@ The deployment guard remains `github.ref == 'refs/heads/main' && github.event_na
 The audit gate fails on high/critical advisories with no ignore or continue-on-error. Native
 tests run before the Astro build. Default token permission is `contents: read`; only deploy
 receives `pages: write` and `id-token: write`, as required by upstream deploy-pages documentation.
-Both Node version inputs are 22 (Astro requires at least 22.12).
+The Node version input is 22 (Astro requires at least 22.12).
 
 Direct Action pins were resolved on 2026-09-26 with read-only
 `gh api repos/<owner>/<repo>/commits/<tag>` against upstream:
@@ -112,16 +112,17 @@ Direct Action pins were resolved on 2026-09-26 with read-only
 |---|---|
 | `actions/checkout` / `v4` | `11d5960a326750d5838078e36cf38b85af677262` |
 | `actions/setup-node` / `v4` | `49933ea5288caeca8642d1e84afbd3f7d6820020` |
-| `withastro/action` / `v3` | `56781b97402ce0487b7e61ce2cb960c0e2cc5289` |
+| `actions/upload-pages-artifact` / `v3` | `56afc609e74202658d3ffba0e8f6dda462b719fa` |
 | `actions/deploy-pages` / `v4` | `d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e` |
 
-The pinned Astro composite's `action.yml` was inspected: it honors `node-version: 22`,
-installs dependencies, builds, and uploads a Pages artifact without deploy permissions.
-Upstream v3 internally references some nested Actions by tags and runs `npm install`;
-pinning the composite does not recursively pin those dependencies. A post-build lockfile check
-fails the build job if that second install changes the audited package manifest/lock. Checkout
-does not persist repository credentials. No vendored action or additional agent automation is
-introduced here.
+Dependencies are installed once with `npm ci`, then tested, audited, and built directly.
+The previous Astro composite ran a second `npm install`, which rewrote optional-platform
+metadata in the lockfile on the Linux runner and failed the integrity check in run
+`36238441226`. Explicit build and artifact-upload steps avoid that mutating reinstall.
+The post-build manifest/lockfile check remains enabled, before artifact upload.
+The pinned Pages uploader internally references `actions/upload-artifact@v4`; a direct pin
+does not recursively pin nested Actions. Checkout does not persist repository credentials.
+No vendored action or additional agent automation is introduced here.
 
 ## Local validation — 2026-09-26
 
@@ -130,7 +131,8 @@ introduced here.
 - Safe candidate: actual **Node 22.23.2** with npm 11.12.1, provisioned with `npm exec --package=node@22.23.2`,
   ran `npm ci && npm test && npm audit --audit-level=high && npm run build` successfully.
   **34 native tests passed; zero audit vulnerabilities; nine pages built.**
-  An Astro-style `npm install` was also checked and left the manifest/lock unchanged.
+  A local Astro-style `npm install` left the manifest/lock unchanged, but the remote Linux
+  run subsequently demonstrated platform-specific lockfile rewriting; CI now avoids that step.
 - Resolved dependencies: Marked 18.0.13, DOMPurify 3.4.15, Astro 7.3.3, direct js-yaml 5.4.2,
   nested js-yaml 4.3.2, sharp 0.35.4, svgo 4.1.0, devalue 5.9.4. Only Marked and the new sanitizer
   dependency tree changed in this candidate.

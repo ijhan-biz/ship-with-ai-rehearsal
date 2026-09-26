@@ -24,12 +24,12 @@ jobs:
       - run: npm test
       # Fail on high/critical vulnerabilities; no exceptions or ignored failures.
       - run: npm audit --audit-level=high
-      - uses: withastro/action@56781b97402ce0487b7e61ce2cb960c0e2cc5289 # v3
-        with:
-          path: .
-          node-version: 22
-      # Astro v3 runs npm install again; do not deploy a changed dependency lock.
+      - run: npm run build
+      # Build only the dependency tree installed and audited above.
       - run: git diff --exit-code -- package.json package-lock.json
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: dist/
 
   deploy:
     needs: build

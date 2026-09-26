@@ -47,7 +47,9 @@ Show the workflow definition and actual available results:
 `npm ci` → `npm test` → `npm audit --audit-level=high` → Astro build/upload.
 Only a push to main can enter the deploy job. PR and manual-dispatch runs are nondeploying.
 Build has `contents: read`; deploy alone has `pages: write` / `id-token: write`.
-Both Node inputs remain 22. See README for the verified upstream SHA origins and nested-action caveat.
+The Node input remains 22. Dependencies are installed once with `npm ci`; the explicit
+build and Pages artifact-upload steps do not reinstall them. The manifest/lockfile integrity
+check stays enabled. See README for the verified upstream SHA origins and nested-action caveat.
 
 **Talking point:** *"The pipeline that builds and ships your code needs the same scrutiny as the
 code itself."*
