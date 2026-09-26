@@ -4,18 +4,27 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Do It Yourself">
   <h1>Do it yourself</h1>
   <p>
-    Everything in this pipeline is free on a public repository, and enterprises can enforce the
-    same protections org-wide by policy. Clone this repo and turn it on:
+    Feature availability and cost depend on your GitHub plan, repository visibility, and organization
+    policies. Check the current documentation before planning a demo. Clone the rehearsal repo for local use:
   </p>
-  <pre>git clone https://github.com/anothergeorgecoldham/ship-with-ai.git
-cd ship-with-ai
-npm install
+  <pre>git clone https://github.com/ijhan-biz/ship-with-ai-rehearsal.git
+cd ship-with-ai-rehearsal
+# Use Node 22.12 or later in the Node 22 line.
+npm ci
+npm test
+npm audit --audit-level=high
 npm run dev</pre>
+  <p>
+    Open <code>http://localhost:4321/ship-with-ai-rehearsal/</code> (or the port printed by Astro).
+    These safe-branch changes must be reviewed and approved before publication; cloning the remote
+    does not guarantee it contains them yet. Do not deploy the historical vulnerable baseline.
+  </p>
   <h2>In your repo settings</h2>
   <ul>
-    <li><strong>Settings → Code security</strong> — enable Dependabot alerts, Dependabot security updates, dependency review, code scanning, and secret scanning with push protection.</li>
-    <li><strong>Settings → Copilot</strong> — enable Copilot Code Review and Agent Merge (auto-merge on green checks).</li>
-    <li><strong>Settings → Pages</strong> — set Source to "GitHub Actions" so <code>.github/workflows/deploy.yml</code> can publish the site.</li>
+    <li><strong>Code security</strong> — check availability and configure the protections you need. Dependency review and code scanning are not implemented by this build workflow.</li>
+    <li><strong>Copilot Code Review</strong> — automatic review requires a configured rule and an eligible account; it has been demonstrated separately for this rehearsal.</li>
+    <li><strong>Merge approval</strong> — ordinary GitHub auto-merge is not Agent Merge and does not implement review fixes. Use a manual, approved merge for this rehearsal; Issue → cloud agent and Agent Merge remain unverified.</li>
+    <li><strong>Pages</strong> — publication requires Source "GitHub Actions" and a permitted deployment environment. Only an approved push to <code>main</code> deploys; PRs and manual workflow dispatches do not.</li>
     <li><strong><code>.github/dependabot.yml</code></strong> — already configured in this repo for npm version updates.</li>
   </ul>
   <h2>Resources</h2>
@@ -24,5 +33,8 @@ npm run dev</pre>
     <li><a href="https://docs.github.com/en/code-security/dependabot">GitHub Docs — Dependabot</a></li>
     <li><a href="https://docs.github.com/en/code-security/secret-scanning">GitHub Docs — Secret scanning</a></li>
     <li><a href="https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions">GitHub Docs — Security hardening for GitHub Actions</a></li>
+    <li><a href="https://docs.github.com/en/copilot/get-started/plans">GitHub Docs — Copilot plans and availability</a></li>
+    <li><a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/automatically-merging-a-pull-request">GitHub Docs — ordinary pull request auto-merge</a></li>
+    <li><a href="https://github.com/anothergeorgecoldham/ship-with-ai">Upstream project — original session reference</a></li>
   </ul>
 </Layout>

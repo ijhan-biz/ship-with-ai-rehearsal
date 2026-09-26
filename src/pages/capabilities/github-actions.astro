@@ -9,14 +9,20 @@ import Layout from '../../layouts/Layout.astro';
   </p>
   <ol>
     <li>Installs dependencies with <code>npm ci</code></li>
-    <li>Builds the Astro site</li>
-    <li>Runs a security job — <code>npm audit</code> and dependency review — as a merge gate</li>
+    <li>Runs native Node tests with <code>npm test</code></li>
+    <li>Runs <code>npm audit --audit-level=high</code>; high or critical advisories fail the build job</li>
+    <li>Builds and uploads the Astro site using the pinned Astro action</li>
     <li>Deploys the built site to GitHub Pages</li>
   </ol>
   <p>
-    The workflow that ships in this repo is deliberately unhardened in one place: a third-party
-    Action pinned only by tag, and a broader-than-needed <code>permissions</code> block. That's
-    the CI/CD half of the supply-chain story — the pipeline that builds and deploys your code
-    needs the same scrutiny as the code itself.
+    This safe version pins its directly referenced Actions to verified full commit SHAs and gives
+    the build read-only repository access. Only the deploy job receives Pages and identity-token
+    write permissions. Both Node setup inputs use Node 22.
+  </p>
+  <p>
+    Pull requests and manual workflow dispatches run the build checks but never deploy.
+    Deployment requires a push to <code>main</code> and configured Pages permissions.
+    Dependency review is not a step in this workflow; required-check enforcement is a separate
+    repository setting, not something this file proves.
   </p>
 </Layout>

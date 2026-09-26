@@ -4,17 +4,17 @@ import Layout from '../../layouts/Layout.astro';
 <Layout title="Agent Merge">
   <h1>Agent Merge</h1>
   <p>
-    Once Copilot Code Review leaves its comments, Agent Merge is what actually closes the loop.
-    It reads the review findings, pushes the fixes — pin the Action, scope the token, validate
-    the input — and merges the pull request the moment checks go green.
+    An agent that fixes review findings and then merges a change is a separate capability from
+    GitHub's ordinary auto-merge. Agent Merge has not been verified in this rehearsal.
+    No workflow here impersonates an agent or automatically implements review fixes.
   </p>
   <p>
-    The same pattern handles routine hygiene: when Dependabot opens a version-bump PR for an
-    outdated package, Agent Merge merges it automatically once the build and security checks
-    pass. No one has to remember to click merge on a dependency bump ever again.
+    The repository setting <code>allow_auto_merge</code> only allows eligible pull requests to use
+    ordinary auto-merge after requirements are met. It does not enable Agent Merge, resolve
+    review findings, or prove who made a fix. Dependabot updates still need review and tests.
   </p>
   <div class="card">
-    This is the headline capability in the live demo: an AI-written PR goes in with real issues,
-    and comes out the other side fixed and merged, without a human doing the mechanical work.
+    For this safe rehearsal, show the proposed diff and passing checks, then use a manual merge
+    only after explicit approval. Do not describe that as an automated or agent-performed merge.
   </div>
 </Layout>

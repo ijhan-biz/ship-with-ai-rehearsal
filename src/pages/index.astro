@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import FeedbackWidget from '../components/FeedbackWidget.astro';
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 <Layout title="Ship with AI">
   <h1>Ship with AI: Review, Secure, and Deploy with Confidence</h1>
@@ -11,8 +12,9 @@ import FeedbackWidget from '../components/FeedbackWidget.astro';
   </p>
   <p>
     This site is both things at once. It's the companion material for AI Genius Season 5,
-    Episode 3, and it's also the exact repository that was reviewed, secured, and deployed live
-    on stream, using the pipeline described on the next few pages.
+    Episode 3, and a rehearsal repository for reviewing, securing, and deploying a small site.
+    Automatic code review has been demonstrated separately; Issue → cloud agent and Agent Merge
+    are not yet verified. This safe version uses an approved manual merge, not a claimed automated fix-and-merge.
   </p>
   <div class="card">
     <strong>The trust gap.</strong> The more code an AI assistant produces, the more your review,
@@ -21,9 +23,9 @@ import FeedbackWidget from '../components/FeedbackWidget.astro';
   </div>
   <h2>Where to start</h2>
   <ul>
-    <li><a href="pipeline/">The pipeline</a> — how an idea becomes a deployed change</li>
-    <li><a href="secure-supply-chain/">Secure your supply chain</a> — the security spine of this demo</li>
-    <li><a href="diy/">Do it yourself</a> — turn all of this on in your own repo</li>
+    <li><a href={`${base}pipeline/`}>The pipeline</a> — how an idea becomes a deployed change</li>
+    <li><a href={`${base}secure-supply-chain/`}>Secure your supply chain</a> — the security spine of this demo</li>
+    <li><a href={`${base}diy/`}>Do it yourself</a> — plan the setup for your own repo</li>
   </ul>
   <FeedbackWidget />
 </Layout>

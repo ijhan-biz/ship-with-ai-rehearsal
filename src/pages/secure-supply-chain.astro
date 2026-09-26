@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 <Layout title="Secure Your Supply Chain">
   <h1>Secure your supply chain</h1>
@@ -18,14 +19,14 @@ import Layout from '../layouts/Layout.astro';
   <h2>What actually protects you</h2>
   <ul>
     <li><strong>Track your dependencies</strong> — know every package you ship, including transitive ones (an SBOM helps).</li>
-    <li><strong>Keep them current</strong> — Dependabot opens a PR the moment an advisory lands.</li>
+    <li><strong>Keep them current</strong> — Dependabot can propose eligible updates when configured; review and test the changes.</li>
     <li><strong>Pin your Actions</strong> — reference third-party GitHub Actions by full commit SHA, not a floating tag or branch.</li>
     <li><strong>Least-privilege your tokens</strong> — grant a workflow only the permissions the job needs.</li>
-    <li><strong>Never commit secrets</strong> — and turn on push protection so a slip never reaches the remote.</li>
+    <li><strong>Never commit secrets</strong> — push protection can block supported secret patterns, but is not a guarantee that every leak is caught.</li>
   </ul>
   <p>
     None of this requires exotic tooling — it's Dependabot, dependency review, secret scanning,
-    and a little care in how you write workflow YAML. See <a href="/ship-with-ai/diy/">Do it yourself</a>
+    and a little care in how you write workflow YAML. See <a href={`${base}diy/`}>Do it yourself</a>
     to turn it all on.
   </p>
 </Layout>

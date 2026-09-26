@@ -1,27 +1,29 @@
 ---
-// Feedback / questions widget — the one interactive, code-bearing feature
-// on the site. Client-side only (works on static GitHub Pages, no backend).
-//
-// Carries two intentionally seeded issues for the live demo — do not fix:
-//   - §5.1: renders submissions with an outdated `marked` (0.3.19), which
-//     does not sanitise its output. Flagged by Dependabot.
-//   - §5.5: the submit handler (src/lib/feedback.js) has no input validation.
-//     Flagged by Copilot Code Review.
+import { MAX_NAME_LENGTH, MAX_MESSAGE_LENGTH, MAX_SUBMISSIONS } from '../lib/feedback.js';
 ---
 <section class="card" id="feedback-widget">
   <h2>Questions &amp; feedback</h2>
-  <p>Leave a question or comment about this session — it renders below, right in your browser.</p>
-  <form id="feedback-form">
+  <p id="feedback-policy">
+    Feedback stays in this browser only; it is not sent to the presenter. Markdown is supported,
+    but embedded HTML controls and images are removed. Names may be blank (Anonymous).
+    Names: {MAX_NAME_LENGTH} characters; messages: {MAX_MESSAGE_LENGTH} characters.
+    Only the latest {MAX_SUBMISSIONS} submissions are kept; a successful save replaces the oldest when full.
+  </p>
+  <form id="feedback-form" novalidate>
     <div class="field">
       <label for="feedback-name">Name</label>
-      <input id="feedback-name" name="name" type="text" placeholder="Ada" />
+      <input id="feedback-name" name="name" type="text" placeholder="Ada"
+        maxlength={MAX_NAME_LENGTH} aria-describedby="feedback-policy feedback-error" />
     </div>
     <div class="field">
       <label for="feedback-message">Message (Markdown supported)</label>
-      <textarea id="feedback-message" name="message" rows="3" placeholder="What did you think?"></textarea>
+      <textarea id="feedback-message" name="message" rows="3" placeholder="What did you think?"
+        maxlength={MAX_MESSAGE_LENGTH} required aria-describedby="feedback-policy feedback-error"></textarea>
     </div>
     <button type="submit">Submit</button>
   </form>
+  <p id="feedback-error" role="alert" tabindex="-1" hidden></p>
+  <p id="feedback-status" role="status"></p>
   <div id="feedback-list" aria-live="polite"></div>
 </section>
 
@@ -45,50 +47,95 @@
     cursor: pointer;
   }
   #feedback-list { margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
-  .feedback-item {
+  #feedback-list :global(.feedback-item) {
     border-top: 1px solid #d0d7de;
     padding-top: 0.6rem;
   }
-  .feedback-item .meta { font-size: 0.8rem; color: #57606a; }
+  #feedback-list :global(.feedback-item .meta) { font-size: 0.8rem; color: #57606a; }
 </style>
 
 <script>
-  // Outdated markdown renderer (see package.json) — genuinely used here to
-  // turn each submission's message into HTML. Old versions do not sanitise.
   import { marked } from 'marked';
-  import { loadSubmissions, saveSubmission } from '../lib/feedback.js';
-  import { FEEDBACK_ANALYTICS_TOKEN } from '../lib/analytics-config.js';
-
-  // Demo-only: would normally authenticate a feedback-analytics beacon.
-  // FEEDBACK_ANALYTICS_TOKEN is a fake placeholder — see analytics-config.js.
-  console.debug('feedback widget ready', FEEDBACK_ANALYTICS_TOKEN.slice(0, 4));
+  import DOMPurify from 'dompurify';
+  import { FeedbackError, loadSubmissions, saveSubmission } from '../lib/feedback.js';
 
   const form = document.getElementById('feedback-form');
   const list = document.getElementById('feedback-list');
+  const nameInput = document.getElementById('feedback-name');
+  const messageInput = document.getElementById('feedback-message');
+  const errorMessage = document.getElementById('feedback-error');
+  const status = document.getElementById('feedback-status');
 
-  function render() {
-    const submissions = loadSubmissions();
-    list.innerHTML = submissions
-      .slice()
-      .reverse()
-      .map((s) => {
-        const html = marked(s.message || '');
-        const who = s.name || 'Anonymous';
-        const when = new Date(s.submittedAt).toLocaleString();
-        return `<div class="feedback-item"><div class="meta">${who} · ${when}</div>${html}</div>`;
-      })
-      .join('');
+  if (!(form instanceof HTMLFormElement) || !(list instanceof HTMLDivElement) ||
+      !(nameInput instanceof HTMLInputElement) || !(messageInput instanceof HTMLTextAreaElement) ||
+      !(errorMessage instanceof HTMLParagraphElement) || !(status instanceof HTMLParagraphElement)) {
+    throw new Error('Required feedback widget elements are missing.');
   }
 
-  form?.addEventListener('submit', (event) => {
+  function showError(error: FeedbackError) {
+    errorMessage.textContent = error.message;
+    errorMessage.hidden = false;
+    status.textContent = '';
+    errorMessage.focus();
+  }
+
+  function render(submissions: ReturnType<typeof loadSubmissions>) {
+    const fragment = document.createDocumentFragment();
+    for (const submission of submissions.slice().reverse()) {
+      const item = document.createElement('div');
+      item.className = 'feedback-item';
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.textContent = `${submission.name || 'Anonymous'} · `;
+      const time = document.createElement('time');
+      time.dateTime = submission.submittedAt;
+      time.textContent = new Date(submission.submittedAt).toLocaleString();
+      meta.append(time);
+
+      // Marked parses Markdown; only DOMPurify makes its HTML safe to insert.
+      const content = DOMPurify.sanitize(marked.parse(submission.message, { async: false }), {
+        ALLOWED_TAGS: [
+          'p', 'br', 'strong', 'em', 'del', 'blockquote', 'ul', 'ol', 'li', 'pre', 'code',
+          'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'table', 'thead', 'tbody', 'tr', 'th', 'td',
+        ],
+        ALLOWED_ATTR: ['href', 'title', 'start'],
+        ALLOW_DATA_ATTR: false,
+        ALLOW_ARIA_ATTR: false,
+        RETURN_DOM_FRAGMENT: true,
+      });
+      item.append(meta, content);
+      fragment.append(item);
+    }
+    list.replaceChildren(fragment);
+  }
+
+  form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const data = new FormData(form);
-    const name = data.get('name');
-    const message = data.get('message');
-    saveSubmission(name, message);
+    let submissions;
+    try {
+      submissions = saveSubmission(nameInput.value, messageInput.value);
+    } catch (error) {
+      if (!(error instanceof FeedbackError)) throw error;
+      showError(error);
+      return;
+    }
+    render(submissions);
     form.reset();
-    render();
+    errorMessage.hidden = true;
+    errorMessage.textContent = '';
+    status.textContent = 'Feedback saved in this browser.';
   });
 
-  render();
+  function load() {
+    let submissions;
+    try {
+      submissions = loadSubmissions();
+    } catch (error) {
+      if (!(error instanceof FeedbackError)) throw error;
+      showError(error);
+      return;
+    }
+    render(submissions);
+  }
+  load();
 </script>

@@ -3,72 +3,80 @@
 Companion site + live demo repo for **AI Genius — Season 5, Episode 3: "Ship with AI: Review,
 Secure, and Deploy with Confidence."**
 
-This repo does two things at once:
+## Safe rehearsal version
 
-1. **Publishes the learning content** — a small Astro site covering the AI-assisted ship
-   pipeline: issue → Copilot-drafted PR → Copilot Code Review → Agent Merge → GitHub Actions
-   (build + supply-chain security) → GitHub Pages.
-2. **Is the demo subject** — the exact code, dependencies, and workflow reviewed, secured, and
-   deployed live on stream.
+This worktree is the fixed recording/deployment candidate, not the intentionally vulnerable demo.
+The nine-page Astro site explains review, supply-chain security, and deployment without claiming
+an unobserved end-to-end agent run.
 
-The security thread running through the demo is **OWASP Top 10:2025 A03 — Software Supply Chain
-Failures**: an outdated dependency, an unpinned CI/CD Action with an over-broad token, and a
-committed (fake) secret. See [`RUNSHEET.md`](./RUNSHEET.md) for the full walkthrough and
-[`src/pages/secure-supply-chain.astro`](./src/pages/secure-supply-chain.astro) for the plain-English
-explanation.
+- Rehearsal repository: <https://github.com/ijhan-biz/ship-with-ai-rehearsal>
+- Configured Pages target: <https://ijhan-biz.github.io/ship-with-ai-rehearsal/>
+  (configuration is not proof of a live deployment).
+- Attribution: [original upstream project](https://github.com/anothergeorgecoldham/ship-with-ai),
+  source baseline `7561fed570ac4e3840960d18ffcc18febdac4464`.
+- Historical seed baseline: `05cdada`, preserved separately. It contained `marked@0.3.19`,
+  unsafe rendering, missing validation, broad workflow permissions, tag-based Actions, and a
+  demo-only fake analytics configuration. The fake configuration/import/debug logging are
+  removed here. No credential contents need to be shown.
+- Expected result here: passing tests, no high/critical audit findings, and a nine-page build.
+  Do not reset main or redeploy the historical vulnerable baseline for a demonstration.
 
-## Prerequisites (set these up before you record)
+Automatic Copilot Code Review was demonstrated independently. **Issue → cloud agent and
+Agent Merge remain unverified.** Ordinary `allow_auto_merge` does not enable an agent to fix
+review comments. This rehearsal plans a **manual, explicitly approved merge**, not an invented
+automated fix/merge. Publication and that merge have not happened yet.
+See [`RUNSHEET.md`](./RUNSHEET.md) for the recording checks.
 
-Learned the hard way while standing this repo up — none of this is obvious from the repo alone,
-and if any one piece is missing the relevant beat just silently won't fire.
+## Availability and release prerequisites
 
-### Account / license
+Features and pricing vary by plan, repository visibility, and organization policy. Consult
+[Copilot plans](https://docs.github.com/en/copilot/get-started/plans) and
+[GitHub security documentation](https://docs.github.com/en/code-security); public does not mean
+every feature is free. Automatic review needs an eligible account and configured rules.
 
-- **An active Copilot license that includes code review + the coding agent** — Copilot Pro, Pro+,
-  Max, Business, or Enterprise. Copilot Free does not expose these features at all.
-- On your profile → **Settings → Copilot → Features**, confirm these two are **Enabled**:
-  - **Copilot code review** — "Use Copilot to review your code and generate pull request summaries."
-  - **Copilot cloud agent** — "Delegate tasks to Copilot cloud agent in repositories where it is
-    enabled." (This is what backs the coding agent and Agent Merge.)
-  - If your seat comes from an org/enterprise, these may show a shield icon meaning the org
-    enforces them — that's fine, it just means you can't turn them off, not that they're broken.
-
-### Repo settings (owner/admin access required)
-
-- **Settings → Rules → Rulesets → New ruleset** — add the **"Automatically request Copilot code
-  review"** rule targeting your default branch. Without this, Copilot never reviews a PR
-  automatically; you'd have to request it by hand every time.
-- **Settings → General → Pull Requests → Allow auto-merge** — must be checked, or Agent Merge has
-  nothing to merge into even when checks are green. (Also settable via API:
-  `gh api -X PATCH /repos/<owner>/<repo> -f allow_auto_merge=true`.)
-- **Settings → Pages → Source: GitHub Actions** — required before `deploy.yml` can publish
-  anything; if you skip this, every push to `main` fails at the `deploy` job with a 404-style
-  error, even though `build` succeeds. Can also be set via API:
-  `gh api -X POST /repos/<owner>/<repo>/pages -f build_type=workflow`.
-- **Settings → Code security** — turn on Dependabot alerts, Dependabot security updates,
-  dependency review, code scanning, and secret scanning with push protection. These are what
-  actually surface the seeded issues in `RUNSHEET.md` §5.1 and §5.3.
-
-### Local `gh`/git auth gotcha
-
-If `git push` is rejected with *"refusing to allow an OAuth App to create or update workflow
-`.github/workflows/...` without `workflow` scope"*, your active `gh`/git credential doesn't have
-the `workflow` OAuth scope. Either `gh auth refresh -h github.com -s workflow`, or push using a
-credential/token that already has it (e.g. `gh auth token` from an account with `workflow` in its
-scopes, passed via `git -c http.extraHeader=...`).
+Publication, only after approval, requires Pages Source **GitHub Actions** and a permitted
+`github-pages` environment. Branch rules determine whether CI checks are mandatory before
+merge. Dependency review, code scanning, and secret scanning require their own configuration;
+this workflow does not implement or prove them. No remote settings are changed by local setup.
 
 ## Run it locally
 
 ```bash
-git clone https://github.com/anothergeorgecoldham/ship-with-ai.git
-cd ship-with-ai
-npm install
+git clone https://github.com/ijhan-biz/ship-with-ai-rehearsal.git
+cd ship-with-ai-rehearsal
+# Node 22.12+ within the Node 22 line, matching CI.
+npm ci
+npm test
+npm audit --audit-level=high
+npm run build
 npm run dev
 ```
 
-Then open the printed local URL. `npm run build` produces the static site in `dist/`;
-`npm run preview` serves that build locally — the safest way to look at the site without
-touching the live repo, its workflow runs, or any seeded issue.
+Until this diff is approved and published, the remote may not contain the safe changes; use the
+reviewed local worktree for acceptance. Open
+`http://localhost:4321/ship-with-ai-rehearsal/` (adjust to Astro's printed port).
+`npm run build` writes `dist/`; `npm run preview` serves the same base path locally.
+No backend, external scripts, or analytics service is used.
+
+## Feedback safety and storage policy
+
+`marked@18.0.13` parses Markdown; it **does not sanitize HTML**. `dompurify@3.4.15` sanitizes
+the result with an allowlist of text formatting, lists, tables, code, and links. Images,
+scripts, SVG, forms, event handlers, styles, and unsafe URL schemes are excluded. Name and time
+are constructed as text, never interpolated into HTML.
+
+Input must be text. Name and message are trimmed; a blank name is Anonymous, but a blank message
+is rejected. Limits after trimming: 100 name characters and 5,000 message characters (JavaScript
+string length). Only the newest 100 submissions are retained; the oldest is replaced only on a
+successful save. Feedback stays in this browser, is not sent to the presenter, and is not synced.
+
+Records must have exactly `name`, `message`, and a valid canonical UTC `submittedAt` timestamp.
+Existing valid records remain readable. Malformed JSON, invalid records/dates, or an oversized
+legacy history block writes with an accessible error; they are **not** silently discarded.
+If recovery is needed, first export/back up the `ship-with-ai-feedback` localStorage entry using
+browser developer tools, then remove **only that entry** and reload. This is a deliberate,
+user-controlled reset. Read/unavailable/quota/write failures are shown visibly; form values
+and existing storage remain intact on failure. The form resets only after a successful save.
 
 ## Structure
 
@@ -77,23 +85,63 @@ src/
   pages/            content pages (home, pipeline, one per capability, secure-supply-chain, DIY)
   components/
     FeedbackWidget.astro   the one interactive feature — questions/feedback, client-side only
-  lib/                widget logic (submit handler + a demo-only fake config)
+  lib/                validated browser-storage logic
+test/                 native node:test / assert coverage (no test dependency)
 astro.config.mjs      static output, `site`/`base` set for GitHub Pages project-page hosting
 .github/
-  workflows/deploy.yml     build → security gate → deploy to Pages
+  workflows/deploy.yml     install → tests → security gate → build/upload → deploy to Pages
   dependabot.yml           npm + GitHub Actions version updates
-  ISSUE_TEMPLATE/feature-request.md   the issue used to kick off the live demo
+  ISSUE_TEMPLATE/feature-request.md   optional future feature request template
 ```
 
 ## Deploying
 
-Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the site and deploys it
-to GitHub Pages (repo setting: **Pages → Source: GitHub Actions**). The workflow ships with two
-intentionally seeded CI/CD issues used in the live demo — see `RUNSHEET.md`.
+After explicit approval, a push to `main` can deploy. PRs targeting `main` and
+`workflow_dispatch` run checks/build/upload **without deploying**, including dispatch on main.
+The deployment guard remains `github.ref == 'refs/heads/main' && github.event_name == 'push'`.
 
-## Re-delivering this demo
+The audit gate fails on high/critical advisories with no ignore or continue-on-error. Native
+tests run before the Astro build. Default token permission is `contents: read`; only deploy
+receives `pages: write` and `id-token: write`, as required by upstream deploy-pages documentation.
+Both Node version inputs are 22 (Astro requires at least 22.12).
 
-If you're presenting this session in another language or region, `RUNSHEET.md` has the full
-beat-by-beat script, including the exact issue text to file and what each tool should flag.
-Nothing in this repo needs to be pre-fixed — the seeded issues are meant to still be present when
-you start the recording.
+Direct Action pins were resolved on 2026-09-26 with read-only
+`gh api repos/<owner>/<repo>/commits/<tag>` against upstream:
+
+| Action / upstream tag | Verified commit |
+|---|---|
+| `actions/checkout` / `v4` | `11d5960a326750d5838078e36cf38b85af677262` |
+| `actions/setup-node` / `v4` | `49933ea5288caeca8642d1e84afbd3f7d6820020` |
+| `withastro/action` / `v3` | `56781b97402ce0487b7e61ce2cb960c0e2cc5289` |
+| `actions/deploy-pages` / `v4` | `d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e` |
+
+The pinned Astro composite's `action.yml` was inspected: it honors `node-version: 22`,
+installs dependencies, builds, and uploads a Pages artifact without deploy permissions.
+Upstream v3 internally references some nested Actions by tags and runs `npm install`;
+pinning the composite does not recursively pin those dependencies. A post-build lockfile check
+fails the build job if that second install changes the audited package manifest/lock. Checkout
+does not persist repository credentials. No vendored action or additional agent automation is
+introduced here.
+
+## Local validation — 2026-09-26
+
+- Baseline: Node 26.0.0 build passed (nine pages); audit failed with one high-severity `marked`
+  dependency finding, as expected. No test/lint/typecheck script existed at baseline.
+- Safe candidate: actual **Node 22.23.2** with npm 11.12.1, provisioned with `npm exec --package=node@22.23.2`,
+  ran `npm ci && npm test && npm audit --audit-level=high && npm run build` successfully.
+  **34 native tests passed; zero audit vulnerabilities; nine pages built.**
+  An Astro-style `npm install` was also checked and left the manifest/lock unchanged.
+- Resolved dependencies: Marked 18.0.13, DOMPurify 3.4.15, Astro 7.3.3, direct js-yaml 5.4.2,
+  nested js-yaml 4.3.2, sharp 0.35.4, svgo 4.1.0, devalue 5.9.4. Only Marked and the new sanitizer
+  dependency tree changed in this candidate.
+- Static output check: all nine pages and 92 internal links/assets use the rehearsal base and
+  resolve to built files. Workflow YAML parsing verified the direct pins, job permissions,
+  Node inputs, test/audit steps, and deploy guard.
+- Local browser acceptance passed: all nine navigation targets returned 200, Markdown and
+  anonymous feedback persisted across reloads, name markup remained literal, unsafe HTML/URL
+  content was removed, and corrupt/unavailable/full storage produced visible errors while
+  preserving drafts and existing records. No application errors or missing assets occurred.
+- The fixed light palette now explicitly uses a light color scheme: an OS dark preference no
+  longer creates dark text on a dark canvas. The 390px mobile viewport has no horizontal overflow.
+- These local results do not establish remote CI, Pages deployment, actual scanning alerts,
+  or unverified agent behavior. No external linter/typechecker was added.
