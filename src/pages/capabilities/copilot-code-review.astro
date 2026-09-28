@@ -1,23 +1,23 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 ---
-<Layout title="Copilot Code Review">
-  <h1>GitHub Copilot Code Review</h1>
+<Layout title="GitHub Copilot 코드 리뷰">
+  <h1>GitHub Copilot 코드 리뷰</h1>
   <p>
-    Automatic Copilot Code Review has been demonstrated independently for this rehearsal.
-    Future automatic reviews depend on the configured rules, account eligibility, and PR scope;
-    this does not prove Issue → cloud agent or Agent Merge.
+    이 리허설의 GitHub Copilot 자동 코드 리뷰는 별도로 시연했습니다.
+    이후 자동 리뷰의 실행 여부는 설정된 규칙, 계정의 이용 자격, 풀리퀘스트(PR) 범위에 따라 달라집니다.
+    이것이 이슈 → 클라우드 에이전트나 Agent Merge를 검증한 것은 아닙니다.
   </p>
-  <p>It reads the diff and may leave inline comments on issues such as:</p>
+  <p>변경 사항을 읽고 다음과 같은 문제에 코드 줄별 댓글을 남길 수 있습니다.</p>
   <ul>
-    <li>A third-party GitHub Action pinned to a tag instead of a commit SHA</li>
-    <li>A workflow requesting broader permissions than the job needs</li>
-    <li>A missing <code>integrity</code>/<code>crossorigin</code> attribute on a third-party script</li>
-    <li>A form handler with no input validation</li>
+    <li>커밋 SHA 대신 태그로 지정된 서드파티 GitHub Actions</li>
+    <li>작업에 필요한 범위보다 넓은 권한을 요청하는 워크플로</li>
+    <li>서드파티 스크립트에서 빠진 <code>integrity</code>/<code>crossorigin</code> 속성</li>
+    <li>입력값 검증이 없는 폼 처리 코드</li>
   </ul>
   <p>
-    None of these are "vulnerabilities" a dependency scanner would catch — they're judgment
-    calls about code quality and defensive coding. That's the point: Copilot Code Review is the
-    reviewer that reads intent, not just signatures.
+    이런 문제는 의존성 검사기가 탐지하는 취약점과는 다릅니다. 코드 품질과 방어적 코딩에 대한
+    판단이 필요합니다. GitHub Copilot 코드 리뷰는 알려진 패턴뿐 아니라 코드의 의도까지
+    살펴보는 리뷰어 역할을 합니다.
   </p>
 </Layout>

@@ -1,23 +1,23 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 ---
-<Layout title="End-to-end Lifecycle Automation">
-  <h1>End-to-end lifecycle automation</h1>
+<Layout title="개발 생애주기 전체의 자동화">
+  <h1>개발 생애주기 전체의 자동화</h1>
   <p>
-    The intended lifecycle can include issue delegation, code review, security checks, and
-    deployment. This rehearsal does not claim that the entire loop has been demonstrated:
+    목표로 하는 개발 생애주기에는 이슈 위임, 코드 리뷰, 보안 검증, 배포가 포함될 수 있습니다.
+    다만 이 리허설에서 전체 과정을 시연했다고 주장하지는 않습니다.
   </p>
-  <pre>Issue → cloud agent: unverified
-Automatic Copilot Code Review: demonstrated independently
-Agent Merge: unverified; manual approved merge for this rehearsal
-GitHub Actions: tests → audit → build → deploy on main push only</pre>
+  <pre>이슈 → 클라우드 에이전트: 미검증
+GitHub Copilot 자동 코드 리뷰: 별도로 시연
+Agent Merge: 미검증; 이 리허설에서는 승인된 수동 병합 사용
+GitHub Actions: 테스트 → 취약점 검사 → 빌드 → main 푸시일 때만 배포</pre>
   <p>
-    Local passing checks are not evidence of a successful remote workflow or deployment.
-    Verify each step and its actor from actual results before presenting it as completed.
-    PR and manual-dispatch runs do not publish this site.
+    로컬 검증 통과는 원격 워크플로나 배포 성공의 증거가 아닙니다.
+    각 단계의 실제 결과와 수행 주체를 확인한 뒤에만 완료되었다고 설명하세요.
+    풀리퀘스트(PR)와 수동 워크플로 실행은 이 사이트를 배포하지 않습니다.
   </p>
   <p>
-    That's the goal of "shipping with AI": useful assistance backed by review, repeatable checks,
-    and explicit release approval, rather than assuming that automation takes responsibility.
+    이것이 AI와 함께 배포하는 목표입니다. 자동화가 책임까지 대신한다고 가정하지 않고,
+    리뷰, 반복 가능한 검증, 명시적인 릴리스 승인을 바탕으로 AI의 도움을 활용합니다.
   </p>
 </Layout>

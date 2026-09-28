@@ -1,101 +1,121 @@
-# RUNSHEET — "Ship with AI" live demo
+# 진행표 — Ship with AI 라이브 데모
 
-This is the **safe recording/deployment candidate**, branched from historical seed `05cdada`.
-The seed remains preserved elsewhere for provenance, not for deployment. This worktree should
-be fully fixed and green. Never reset/push main or deploy known-vulnerable code to recreate a beat.
+**AI Genius 시즌 5 에피소드 3 — AI로 완성하는 코드 리뷰부터 보안, 배포까지**
 
-## Before you go live
+이 작업 트리는 의도적으로 남긴 데모 문제가 있는 과거 버전 `05cdada`에서 분기한
+**안전한 녹화·배포 후보**입니다. 과거 버전은 출처 확인용으로 별도 보존하며 배포하지 않습니다.
+이 작업 트리는 보안 수정을 유지하고 모든 검사를 통과해야 합니다.
+시연 장면을 재현하려고 `main`을 과거 상태로 되돌려 푸시하거나 알려진 취약점이 있는 코드를 배포하지 마세요.
 
-- Use only the approved rehearsal worktree/repository, not the upstream/live project.
-- Run `npm ci && npm test && npm audit --audit-level=high && npm run build` using Node 22.12+
-  within the Node 22 line. Expect zero high/critical advisories and nine pages.
-- Preview locally at `/ship-with-ai-rehearsal/` and complete the acceptance checks below.
-- Inspect the proposed diff before any publication; remote PR creation, settings changes, merges,
-  deployments, and recording require separate approval. Local work does none of these.
-- Check current [plan availability](https://docs.github.com/en/copilot/get-started/plans).
-  Do not promise all public-repository features are free.
-- A local build is not a remote CI/deployment result. Verify Pages settings and actual remote
-  results separately before claiming the site is published.
+## 라이브 시작 전
 
-## Beat 0 — State what is and is not proven
+- 업스트림이나 운영 프로젝트가 아닌, 승인된 리허설 작업 트리·저장소만 사용합니다.
+- Node 22 계열의 22.12+ 버전에서 `npm ci && npm test && npm audit --audit-level=high && npm run build`를
+  실행합니다. 높음(high)·치명적(critical) 수준의 취약점 0건과 9개 페이지 빌드 완료가 기대 결과입니다.
+- `/ship-with-ai-rehearsal/`에서 로컬 미리보기를 열고 아래 인수 점검을 완료합니다.
+- 공개 전 변경 사항을 검토합니다. 원격 풀리퀘스트(PR) 생성, 설정 변경, 병합, 배포, 녹화는 각각
+  별도 승인이 필요하며, 로컬 작업에서는 수행하지 않습니다.
+- 현재 [요금제별 기능 제공 범위](https://docs.github.com/en/copilot/get-started/plans)를 확인합니다.
+  공개 저장소의 모든 기능이 무료라고 안내하지 않습니다.
+- 로컬 빌드는 원격 CI·배포 결과가 아닙니다. 사이트가 배포되었다고 안내하기 전에
+  GitHub Pages 설정과 실제 원격 결과를 별도로 확인합니다.
 
-- Automatic Copilot Code Review: demonstrated independently.
-- Issue → cloud agent: unverified. The issue template is only a future starting point.
-- Agent Merge: unverified. No fake actor, automatic fix, or merge claim.
-- Safe candidate: local fixes and checks, followed by browser acceptance and an approved diff.
+## 장면 0 — 검증한 범위와 미검증 범위 구분
 
-**Talking point:** *"We separate demonstrated capabilities from the workflow we still need to validate."*
+- GitHub Copilot 자동 코드 리뷰: 별도로 시연되었습니다.
+- 이슈 → 클라우드 에이전트: 미검증입니다. 이슈 템플릿은 향후 작업의 출발점일 뿐입니다.
+- Agent Merge: 미검증입니다. 실제와 다른 실행 주체를 내세우거나 자동 수정·병합을 주장하지 않습니다.
+- 안전한 후보: 로컬 수정·검사 후 브라우저 인수 점검과 변경 사항 승인이 필요합니다.
+- 사용자 제공 과거 이력: 안전한 리허설 PR #34는 **사람의 명시적 승인 후 수동 병합**되었으며,
+  병합 SHA는 `cfa05f3d682d7cf410024b019b099162b0e001b6`입니다. 배포 실행 `36239337726`도 성공했습니다.
+  이번 작업에서 새로 검증한 이력이 아니며, 에이전트 자동화의 증거가 아닙니다.
+- **현재 한국어화 변경은 로컬 전용이며 원격에 배포되지 않았습니다.** `README.md`의 2026-09-26 기록은
+  과거 검증 결과입니다. 현재 한국어화에 대한 브라우저 품질 검증이나 에이전트 워크플로 검증을 뜻하지 않습니다.
 
-## Beat 1 — GitHub Copilot Code Review
+**발표 요점:** *“시연으로 확인한 기능과 앞으로 검증할 워크플로를 구분합니다.”*
 
-Show only real review evidence, attributed to its actual actor. Historical findings included
-tag-based Actions, `permissions: write-all`, and missing feedback validation. This safe branch
-fixes them; do not expect a new review to reproduce every finding or label it as guaranteed.
+## 장면 1 — GitHub Copilot 코드 리뷰
 
-## Beat 2 — Approved fixes and manual merge
+실제 코드 리뷰 증거만 보여주고, 누가 수행했는지 정확히 밝힙니다. 과거 지적 사항에는
+태그 기반 GitHub Actions, `permissions: write-all`, 피드백 검증 누락이 있었습니다.
+현재 안전한 브랜치는 이를 수정했으므로 새 코드 리뷰에서 같은 지적이 모두 재현된다고 기대하거나 보장하지 않습니다.
 
-Show the actual local diff: verified SHA pins, least-privilege permissions, storage validation,
-current Marked, DOMPurify, and safe text construction. A reviewer must approve the exact diff
-before publication. Use a manual merge only when authorized.
+## 장면 2 — 승인된 수정과 수동 병합
 
-`allow_auto_merge` is ordinary GitHub auto-merge permission, not Agent Merge and not an
-automatic remediation system. Do not attribute these fixes or a manual merge to an agent run.
+실제 로컬 변경 사항을 보여줍니다. 확인한 SHA 고정, 최소 권한, 저장소 검증,
+갱신된 Marked, DOMPurify, 안전한 텍스트 생성이 핵심입니다.
+공개 전 검토자가 해당 변경 사항을 정확히 확인하고 승인해야 합니다. 수동 병합도 허가된 경우에만 수행합니다.
 
-## Beat 3 — GitHub Actions (CI/CD)
+`allow_auto_merge`는 일반적인 GitHub 자동 병합 허용 설정이며, Agent Merge나 자동 수정 시스템이 아닙니다.
+이 보안 수정이나 수동 병합을 에이전트 실행 결과로 소개하지 않습니다.
 
-Show the workflow definition and actual available results:
-`npm ci` → `npm test` → `npm audit --audit-level=high` → Astro build/upload.
-Only a push to main can enter the deploy job. PR and manual-dispatch runs are nondeploying.
-Build has `contents: read`; deploy alone has `pages: write` / `id-token: write`.
-The Node input remains 22. Dependencies are installed once with `npm ci`; the explicit
-build and Pages artifact-upload steps do not reinstall them. The manifest/lockfile integrity
-check stays enabled. See README for the verified upstream SHA origins and nested-action caveat.
+## 장면 3 — GitHub Actions (CI/CD)
 
-**Talking point:** *"The pipeline that builds and ships your code needs the same scrutiny as the
-code itself."*
+워크플로 정의와 실제로 확인 가능한 결과를 보여줍니다.
+`npm ci` → `npm test` → `npm audit --audit-level=high` → Astro 빌드·업로드 순서입니다.
+`main`에 푸시한 경우에만 배포 작업을 실행할 수 있습니다. PR과 수동 실행은 배포하지 않습니다.
+빌드 권한은 `contents: read`이며, 배포 작업에만 `pages: write` / `id-token: write`가 있습니다.
+Node 입력값은 22를 유지합니다. 의존성은 `npm ci`로 한 번만 설치하며, 명시적인
+빌드·GitHub Pages 아티팩트 업로드 단계에서는 재설치하지 않습니다.
+매니페스트·잠금 파일 무결성 검사는 유지합니다.
+확인한 업스트림 SHA 출처와 중첩 작업의 주의 사항은 `README.md`를 참고하세요.
 
-## Beat 4 — AI-assisted security review
+**발표 요점:** *“코드를 빌드하고 배포하는 파이프라인도 코드 자체만큼 꼼꼼히 검토해야 합니다.”*
 
-The historical `marked@0.3.19` seed had high-severity dependency advisories. This version uses
-`marked@18.0.13` plus `dompurify@3.4.15`. **Marked does not sanitize HTML**, even after upgrading.
-Sanitization and text-only name/time rendering are separate protections against XSS.
+## 장면 4 — AI를 활용한 보안 검토
 
-The historical `src/lib/analytics-config.js` was a fake demo placeholder. Its file, import, and
-debug logging are removed here. Detection by secret scanning/push protection was not verified;
-do not show token-like contents or claim an alert exists without actual evidence.
-Dependency review and code scanning are not steps in this workflow.
+과거 `marked@0.3.19` 버전에는 높음 수준의 의존성 취약점이 있었습니다. 현재 버전은
+`marked@18.0.13`과 `dompurify@3.4.15`를 함께 사용합니다. 업그레이드하더라도
+**Marked는 위험한 HTML을 제거하지 않습니다**. HTML 정제와 이름·시각의 텍스트 전용 렌더링은
+XSS를 방지하는 별도의 보호 조치입니다.
 
-## Beat 5 — Honest lifecycle summary
+과거 `src/lib/analytics-config.js`는 데모용 가짜 시크릿을 담은 예시 설정이었습니다.
+현재 버전에서는 파일, 가져오기 구문, 디버그 로그를 제거했습니다.
+시크릿 검사(Secret scanning)·푸시 보호(Push protection)의 탐지는 검증하지 않았습니다.
+토큰처럼 보이는 내용을 보여주거나 실제 증거 없이 경고가 발생했다고 주장하지 않습니다.
+의존성 검토(Dependency review)와 코드 검사(Code scanning)는 이 워크플로의 단계에 포함되지 않습니다.
 
-The release path is proposed change → review → approved manual merge → tested/audited build
-→ Pages deployment on main push, subject to repository settings. Unverified agent steps remain
-unverified. Passing tests are evidence of tested behavior, not a guarantee of complete security.
+## 장면 5 — 검증 범위에 맞춘 개발 생애주기 정리
 
-## Payoff
+배포 경로는 변경 제안 → 코드 리뷰 → 승인된 수동 병합 → 테스트·감사를 통과한 빌드
+→ `main` 푸시 시 GitHub Pages 배포이며, 저장소 설정에 따릅니다.
+검증하지 않은 에이전트 단계는 미검증으로 남겨 둡니다.
+테스트 통과는 시험한 동작의 증거이지 완전한 보안을 보장하지 않습니다.
 
-Use the local preview first. Visit the configured
-<https://ijhan-biz.github.io/ship-with-ai-rehearsal/> only after an approved deployment has actually
-succeeded. Do not present a pre-existing page or local build as a newly completed deployment.
+## 결과 확인
 
-## Browser acceptance checklist (local preview only)
+먼저 로컬 미리보기를 사용합니다. 설정된 주소
+<https://ijhan-biz.github.io/ship-with-ai-rehearsal/>를 배포 결과로 소개하려면
+승인된 해당 버전의 배포가 실제로 성공했는지 확인해야 합니다.
+사용자가 제공한 과거 배포 성공 이력은 현재 한국어화의 원격 반영을 뜻하지 않습니다.
+기존 페이지나 로컬 빌드를 방금 완료된 배포로 소개하지 않습니다.
 
-- Visit all nine pages through the header, home links, and Supply Chain → DIY.
-  All internal paths and assets must stay under `/ship-with-ai-rehearsal/`; no navigation 404s.
-- Use `#feedback-name`, `#feedback-message`, and `#feedback-form`. Submit a named Markdown message,
-  then an anonymous message. Check `.feedback-item`, `.meta`, and `time` under `#feedback-list`.
-  Newest appears first; formatting and safe links work; reload preserves both entries.
-- Name markup is literal text. In message Markdown, script/SVG/image/form elements and event
-  attributes must not survive, and `javascript:` links must not be actionable. No external
-  images or scripts should load. Do not disable Markdown to pass this check.
-- Whitespace-only message: visible, focused `#feedback-error[role="alert"]`; draft remains.
-  Exercise lengths beyond 100/5,000 by bypassing HTML `maxlength` to verify the storage boundary.
-- Set only the test origin's `ship-with-ai-feedback` entry to corrupt JSON or an invalid record.
-  Reload and submit: explicit recovery message, untouched raw storage, unchanged form values.
-  Back up/remove only that test entry to recover. Do not clear unrelated browser storage.
-- Simulate blocked reads/getters, quota errors, and failed writes. Expect visible errors, no false
-  success, unchanged drafts and history. On successful save only, fields clear and
-  `#feedback-status[role="status"]` says “Feedback saved in this browser.”
-- At 100 records, the next successful save replaces the oldest. A failed save must not evict it.
+## 브라우저 인수 점검표 — 로컬 미리보기 전용
 
-Native tests cover pure validation/storage and preservation; they do not prove browser rendering,
-screen-reader behavior, remote CI, or deployment. Browser acceptance is a separate handoff.
+아래는 수행할 점검 항목이며, 현재 한국어화에 대해 완료했다는 기록이 아닙니다.
+
+- 상단 탐색 메뉴, 홈 링크, 공급망 보안 → 직접 해보기를 통해 9개 페이지를 모두 방문합니다.
+  내부 경로와 리소스는 모두 `/ship-with-ai-rehearsal/` 아래에 있어야 하며, 탐색 중 404가 발생하면 안 됩니다.
+- `#feedback-name`, `#feedback-message`, `#feedback-form`을 사용합니다. 이름을 입력한 Markdown 메시지와
+  이름을 비운 메시지를 차례로 저장합니다. 빈 이름은 ‘익명’으로 표시되어야 합니다.
+  `#feedback-list` 아래의 `.feedback-item`, `.meta`, `time`을 확인합니다.
+  최신 기록이 먼저 표시되고, 서식과 안전한 링크가 작동하며, 새로고침 후 두 기록이 모두 유지되어야 합니다.
+  피드백은 브라우저에만 저장되며 서버나 발표자에게 전송되거나 다른 기기와 동기화되지 않아야 합니다.
+- 이름의 마크업은 일반 텍스트여야 합니다. 메시지 Markdown의 스크립트·SVG·이미지·폼 요소와
+  이벤트 속성은 제거되어야 하며, `javascript:` 링크는 실행되지 않아야 합니다.
+  외부 이미지나 스크립트를 불러오면 안 됩니다. 이 검사를 통과하려고 Markdown을 비활성화하지 않습니다.
+- 공백만 있는 메시지: `#feedback-error[role="alert"]`가 표시되고 포커스를 받으며, 작성 중인 내용은 유지되어야 합니다.
+  HTML `maxlength`를 우회해 이름 100자·메시지 5,000자를 초과하는 입력으로 저장 단계의 제한을 확인합니다.
+- 테스트용 출처의 `ship-with-ai-feedback` 항목만 손상된 JSON이나 유효하지 않은 기록으로 설정합니다.
+  기존 내용이 있다면 손상 테스트 전에도 백업합니다. 새로고침 후 저장을 시도하면 명확한 복구 안내가 표시되고,
+  원본 저장 내용과 폼 입력값은 변경되지 않아야 합니다. 자동으로 덮어쓰면 안 됩니다.
+  복구할 때는 해당 테스트 항목을 **먼저 백업한 뒤 그 항목만 삭제**하고 새로고침합니다.
+  관련 없는 브라우저 저장소는 삭제하지 않습니다.
+- 읽기·접근자 차단, 용량 초과, 쓰기 실패를 재현합니다. 오류가 표시되고, 성공으로 잘못 안내하지 않으며,
+  작성 중인 내용과 기록이 유지되어야 합니다. 저장에 성공한 경우에만 입력란이 비워지고
+  `#feedback-status[role="status"]`에 ‘이 브라우저에 피드백을 저장했습니다.’가 표시되어야 합니다.
+- 기록이 100건이면 다음 저장 성공 시 가장 오래된 기록을 교체합니다. 저장 실패 시에는 삭제하면 안 됩니다.
+
+내장 테스트는 순수 검증·저장 로직과 데이터 보존을 다룹니다.
+브라우저 렌더링, 화면 읽기 프로그램 동작, 원격 CI, 배포를 입증하지는 않습니다.
+브라우저 인수 점검은 별도로 수행하고 결과를 인계해야 합니다.

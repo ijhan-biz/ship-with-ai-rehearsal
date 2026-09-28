@@ -1,50 +1,53 @@
 # Ship with AI
 
-Companion site + live demo repo for **AI Genius — Season 5, Episode 3: "Ship with AI: Review,
-Secure, and Deploy with Confidence."**
+**AI Genius 시즌 5 에피소드 3 — Ship with AI: AI로 완성하는 코드 리뷰부터 보안, 배포까지**의
+학습 사이트이자 라이브 데모 저장소입니다.
 
-## Safe rehearsal version
+## 안전한 리허설 버전
 
-This worktree is the fixed recording/deployment candidate, not the intentionally vulnerable demo.
-The nine-page Astro site explains review, supply-chain security, and deployment without claiming
-an unobserved end-to-end agent run.
+이 작업 트리는 보안 문제를 수정한 녹화·배포 후보이며, 취약점을 의도적으로 남긴 데모가 아닙니다.
+9개 페이지로 구성된 Astro 사이트에서 코드 리뷰, 소프트웨어 공급망 보안, 배포를 설명합니다.
+직접 확인하지 않은 에이전트의 전체 실행 과정을 검증된 것으로 소개하지 않습니다.
 
-- Rehearsal repository: <https://github.com/ijhan-biz/ship-with-ai-rehearsal>
-- Configured Pages target: <https://ijhan-biz.github.io/ship-with-ai-rehearsal/>
-  (configuration is not proof of a live deployment).
-- Attribution: [original upstream project](https://github.com/anothergeorgecoldham/ship-with-ai),
-  source baseline `7561fed570ac4e3840960d18ffcc18febdac4464`.
-- Historical seed baseline: `05cdada`, preserved separately. It contained `marked@0.3.19`,
-  unsafe rendering, missing validation, broad workflow permissions, tag-based Actions, and a
-  demo-only fake analytics configuration. The fake configuration/import/debug logging are
-  removed here. No credential contents need to be shown.
-- Expected result here: passing tests, no high/critical audit findings, and a nine-page build.
-  Do not reset main or redeploy the historical vulnerable baseline for a demonstration.
+- 리허설 저장소: <https://github.com/ijhan-biz/ship-with-ai-rehearsal>
+- 설정된 GitHub Pages 대상: <https://ijhan-biz.github.io/ship-with-ai-rehearsal/>
+  (설정만으로 실제 배포를 입증할 수는 없습니다).
+- 원작 출처: [원본 업스트림 프로젝트](https://github.com/anothergeorgecoldham/ship-with-ai),
+  소스 기준 SHA `7561fed570ac4e3840960d18ffcc18febdac4464`.
+- 의도적으로 남긴 데모 문제가 있는 과거 기준 버전: `05cdada`. 별도로 보존되어 있습니다.
+  `marked@0.3.19`, 안전하지 않은 렌더링, 검증 누락, 과도한 워크플로 권한, 태그 기반 GitHub Actions,
+  데모용 가짜 시크릿을 담은 분석 설정이 포함되어 있었습니다. 현재 버전에서는 해당 가짜 설정,
+  가져오기 구문, 디버그 로그를 제거했습니다. 자격 증명 내용은 보여줄 필요가 없습니다.
+- 기대 결과: 테스트 통과, 높음(high)·치명적(critical) 수준의 취약점 없음, 9개 페이지 빌드 완료.
+  시연을 위해 `main`을 과거 상태로 되돌리거나 취약한 과거 버전을 다시 배포하지 마세요.
 
-Automatic Copilot Code Review was demonstrated independently. **Issue → cloud agent and
-Agent Merge remain unverified.** Ordinary `allow_auto_merge` does not enable an agent to fix
-review comments. This rehearsal plans a **manual, explicitly approved merge**, not an invented
-automated fix/merge. Publication and that merge have not happened yet.
-See [`RUNSHEET.md`](./RUNSHEET.md) for the recording checks.
+GitHub Copilot 자동 코드 리뷰는 별도로 시연되었습니다. **이슈 → 클라우드 에이전트와
+Agent Merge는 아직 검증되지 않았습니다.** 일반적인 `allow_auto_merge` 설정은 에이전트가
+리뷰 의견을 자동으로 수정하도록 활성화하는 기능이 아닙니다.
+사용자가 제공한 과거 이력에 따르면, 안전한 리허설 풀리퀘스트(PR) #34는 **사람의 명시적 승인 후
+수동으로 병합**되었으며, 병합 SHA는 `cfa05f3d682d7cf410024b019b099162b0e001b6`입니다.
+배포 실행 `36239337726`도 성공했습니다. 이번 작업에서 이 이력을 새로 검증한 것은 아니며,
+에이전트의 자동 수정·병합을 입증하지도 않습니다. **현재 한국어화 변경은 로컬에만 있으며 원격에 배포되지 않았습니다.**
+녹화 점검 항목은 [`RUNSHEET.md`](./RUNSHEET.md)를 참고하세요.
 
-## Availability and release prerequisites
+## 기능 제공 범위와 배포 전제 조건
 
-Features and pricing vary by plan, repository visibility, and organization policy. Consult
-[Copilot plans](https://docs.github.com/en/copilot/get-started/plans) and
-[GitHub security documentation](https://docs.github.com/en/code-security); public does not mean
-every feature is free. Automatic review needs an eligible account and configured rules.
+기능과 요금은 요금제, 저장소 공개 범위, 조직 정책에 따라 달라집니다.
+[GitHub Copilot 요금제](https://docs.github.com/en/copilot/get-started/plans)와
+[GitHub 보안 문서](https://docs.github.com/en/code-security)를 확인하세요.
+공개 저장소라고 모든 기능이 무료인 것은 아닙니다. 자동 코드 리뷰에는 지원 대상 계정과 규칙 설정이 필요합니다.
 
-Publication, only after approval, requires Pages Source **GitHub Actions** and a permitted
-`github-pages` environment. Branch rules determine whether CI checks are mandatory before
-merge. Dependency review, code scanning, and secret scanning require their own configuration;
-this workflow does not implement or prove them. No remote settings are changed by local setup.
+승인 후 배포하려면 GitHub Pages의 소스(Source)를 **GitHub Actions**로 설정하고
+`github-pages` 환경에서 배포를 허용해야 합니다. 병합 전 CI 검사 필수 여부는 브랜치 규칙에 따릅니다.
+의존성 검토(Dependency review), 코드 검사(Code scanning), 시크릿 검사(Secret scanning)는
+별도 설정이 필요하며, 이 워크플로는 이를 구현하거나 검증하지 않습니다. 로컬 설정은 원격 설정을 변경하지 않습니다.
 
-## Run it locally
+## 로컬 실행
 
 ```bash
 git clone https://github.com/ijhan-biz/ship-with-ai-rehearsal.git
 cd ship-with-ai-rehearsal
-# Node 22.12+ within the Node 22 line, matching CI.
+# CI와 동일하게 Node 22 계열의 22.12+ 버전을 사용합니다.
 npm ci
 npm test
 npm audit --audit-level=high
@@ -52,98 +55,103 @@ npm run build
 npm run dev
 ```
 
-Until this diff is approved and published, the remote may not contain the safe changes; use the
-reviewed local worktree for acceptance. Open
-`http://localhost:4321/ship-with-ai-rehearsal/` (adjust to Astro's printed port).
-`npm run build` writes `dist/`; `npm run preview` serves the same base path locally.
-No backend, external scripts, or analytics service is used.
+위 명령은 원격 저장소를 복제하므로 아직 배포되지 않은 현재 한국어화 변경은 포함하지 않습니다.
+한국어화 인수 점검에는 해당 변경이 있는 로컬 작업 트리를 사용하세요.
+`http://localhost:4321/ship-with-ai-rehearsal/`을 여세요(Astro가 출력한 포트에 맞게 조정).
+`npm run build`는 `dist/`에 결과를 생성하며, `npm run preview`는 같은 기본 경로로 로컬 미리보기를 제공합니다.
+백엔드, 외부 스크립트, 분석 서비스는 사용하지 않습니다.
 
-## Feedback safety and storage policy
+## 피드백 보안 및 저장 정책
 
-`marked@18.0.13` parses Markdown; it **does not sanitize HTML**. `dompurify@3.4.15` sanitizes
-the result with an allowlist of text formatting, lists, tables, code, and links. Images,
-scripts, SVG, forms, event handlers, styles, and unsafe URL schemes are excluded. Name and time
-are constructed as text, never interpolated into HTML.
+`marked@18.0.13`은 Markdown을 해석하지만 **위험한 HTML을 제거하지는 않습니다**.
+`dompurify@3.4.15`는 텍스트 서식, 목록, 표, 코드, 링크만 허용하도록 결과를 정제합니다.
+이미지, 스크립트, SVG, 폼, 이벤트 처리기, 스타일, 안전하지 않은 URL 스킴은 제외합니다.
+이름과 시각은 텍스트로 생성하며 HTML에 삽입하지 않습니다.
 
-Input must be text. Name and message are trimmed; a blank name is Anonymous, but a blank message
-is rejected. Limits after trimming: 100 name characters and 5,000 message characters (JavaScript
-string length). Only the newest 100 submissions are retained; the oldest is replaced only on a
-successful save. Feedback stays in this browser, is not sent to the presenter, and is not synced.
+입력은 텍스트여야 합니다. 이름과 메시지의 앞뒤 공백을 제거하며, 빈 이름은 ‘익명’으로 표시하고
+빈 메시지는 거부합니다. 공백 제거 후 길이 제한은 이름 100자, 메시지 5,000자입니다(JavaScript 문자열 길이 기준).
+최근 100건만 보관하며, 저장에 성공한 경우에만 가장 오래된 기록을 교체합니다.
+피드백은 **이 브라우저에만 저장**되며 서버나 발표자에게 전송되지 않고 다른 기기와 동기화되지 않습니다.
+저장 성공 문구는 ‘이 브라우저에 피드백을 저장했습니다.’입니다.
 
-Records must have exactly `name`, `message`, and a valid canonical UTC `submittedAt` timestamp.
-Existing valid records remain readable. Malformed JSON, invalid records/dates, or an oversized
-legacy history block writes with an accessible error; they are **not** silently discarded.
-If recovery is needed, first export/back up the `ship-with-ai-feedback` localStorage entry using
-browser developer tools, then remove **only that entry** and reload. This is a deliberate,
-user-controlled reset. Read/unavailable/quota/write failures are shown visibly; form values
-and existing storage remain intact on failure. The form resets only after a successful save.
+각 기록에는 `name`, `message`, 유효한 정규 UTC 타임스탬프 `submittedAt`만 있어야 합니다.
+기존의 유효한 기록은 계속 읽을 수 있습니다. 잘못된 JSON, 유효하지 않은 기록·날짜, 크기 제한을 넘는
+과거 기록이 있으면 접근 가능한 오류 메시지를 표시하고 저장을 차단합니다. 기록을 **자동으로 버리거나 덮어쓰지 않습니다**.
+복구가 필요하면 브라우저 개발자 도구에서 `ship-with-ai-feedback` localStorage 항목을 먼저
+내보내거나 백업한 뒤 **해당 항목만 삭제**하고 새로고침하세요. 사용자가 직접 선택하는 초기화 절차입니다.
+읽기 실패, 저장소 사용 불가, 용량 초과, 쓰기 실패는 화면에 표시하며, 실패 시 입력값과 기존 저장 내용은 유지합니다.
+폼은 저장에 성공한 경우에만 초기화합니다.
 
-## Structure
+## 구조
 
 ```
 src/
-  pages/            content pages (home, pipeline, one per capability, secure-supply-chain, DIY)
+  pages/            콘텐츠 페이지(홈, 파이프라인, 기능별 페이지, secure-supply-chain, 직접 해보기)
   components/
-    FeedbackWidget.astro   the one interactive feature — questions/feedback, client-side only
-  lib/                validated browser-storage logic
-test/                 native node:test / assert coverage (no test dependency)
-astro.config.mjs      static output, `site`/`base` set for GitHub Pages project-page hosting
+    FeedbackWidget.astro   유일한 상호작용 기능 — 질문·피드백, 브라우저에서만 처리
+  lib/                검증을 포함한 브라우저 저장소 로직
+test/                 내장 node:test / assert 테스트(추가 테스트 의존성 없음)
+astro.config.mjs      정적 출력, GitHub Pages 프로젝트 호스팅용 `site`/`base` 설정
 .github/
-  workflows/deploy.yml     install → tests → security gate → build/upload → deploy to Pages
-  dependabot.yml           npm + GitHub Actions version updates
-  ISSUE_TEMPLATE/feature-request.md   optional future feature request template
+  workflows/deploy.yml     설치 → 테스트 → 보안 게이트 → 빌드·업로드 → GitHub Pages 배포
+  dependabot.yml           npm 및 GitHub Actions 버전을 갱신하는 Dependabot 설정
+  ISSUE_TEMPLATE/feature-request.md   향후 기능 요청에 선택적으로 사용할 템플릿
 ```
 
-## Deploying
+## 배포
 
-After explicit approval, a push to `main` can deploy. PRs targeting `main` and
-`workflow_dispatch` run checks/build/upload **without deploying**, including dispatch on main.
-The deployment guard remains `github.ref == 'refs/heads/main' && github.event_name == 'push'`.
+명시적 승인 후 `main`에 푸시하면 배포할 수 있습니다. `main` 대상 PR과
+`workflow_dispatch`는 검사·빌드·업로드만 수행하며 **배포하지 않습니다**. `main`에서 수동 실행해도 동일합니다.
+배포 조건은 `github.ref == 'refs/heads/main' && github.event_name == 'push'`로 유지됩니다.
 
-The audit gate fails on high/critical advisories with no ignore or continue-on-error. Native
-tests run before the Astro build. Default token permission is `contents: read`; only deploy
-receives `pages: write` and `id-token: write`, as required by upstream deploy-pages documentation.
-The Node version input is 22 (Astro requires at least 22.12).
+취약점 검사 보안 게이트는 높음·치명적 수준의 취약점 발견 시 실패하며, 무시하거나 오류 후 계속 진행하지 않습니다.
+내장 테스트는 Astro 빌드 전에 실행됩니다. 기본 토큰 권한은 `contents: read`이며,
+업스트림 deploy-pages 문서에 따라 배포 작업에만 `pages: write`와 `id-token: write`를 부여합니다.
+Node 버전 입력값은 22입니다(Astro 최소 요구 버전은 22.12).
 
-Direct Action pins were resolved on 2026-09-26 with read-only
-`gh api repos/<owner>/<repo>/commits/<tag>` against upstream:
+직접 참조하는 GitHub Actions의 고정 SHA는 2026-09-26에 업스트림을 대상으로 읽기 전용 명령
+`gh api repos/<owner>/<repo>/commits/<tag>`를 실행해 확인했습니다.
 
-| Action / upstream tag | Verified commit |
+| GitHub Actions 작업 / 업스트림 태그 | 확인한 커밋 SHA |
 |---|---|
 | `actions/checkout` / `v4` | `11d5960a326750d5838078e36cf38b85af677262` |
 | `actions/setup-node` / `v4` | `49933ea5288caeca8642d1e84afbd3f7d6820020` |
 | `actions/upload-pages-artifact` / `v3` | `56afc609e74202658d3ffba0e8f6dda462b719fa` |
 | `actions/deploy-pages` / `v4` | `d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e` |
 
-Dependencies are installed once with `npm ci`, then tested, audited, and built directly.
-The previous Astro composite ran a second `npm install`, which rewrote optional-platform
-metadata in the lockfile on the Linux runner and failed the integrity check in run
-`36238441226`. Explicit build and artifact-upload steps avoid that mutating reinstall.
-The post-build manifest/lockfile check remains enabled, before artifact upload.
-The pinned Pages uploader internally references `actions/upload-artifact@v4`; a direct pin
-does not recursively pin nested Actions. Checkout does not persist repository credentials.
-No vendored action or additional agent automation is introduced here.
+의존성은 `npm ci`로 한 번만 설치한 뒤 테스트, 감사, 빌드를 직접 수행합니다.
+이전 Astro 복합 작업은 `npm install`을 다시 실행해 Linux 실행기의 잠금 파일에서
+플랫폼별 선택 의존성 메타데이터를 변경했고, 실행 `36238441226`의 무결성 검사를 실패시켰습니다.
+명시적인 빌드·아티팩트 업로드 단계로 이러한 재설치를 피합니다.
+빌드 후 매니페스트·잠금 파일 검사는 아티팩트 업로드 전에 계속 수행합니다.
+SHA로 고정한 GitHub Pages 업로더는 내부에서 `actions/upload-artifact@v4`를 참조합니다.
+직접 참조를 고정해도 중첩된 GitHub Actions 작업까지 재귀적으로 고정되지는 않습니다.
+체크아웃 시 저장소 자격 증명을 남기지 않습니다.
+외부 작업을 저장소에 복사해 포함하거나 에이전트 자동화를 추가하지 않았습니다.
 
-## Local validation — 2026-09-26
+## 과거 로컬 검증 기록 — 2026-09-26
 
-- Baseline: Node 26.0.0 build passed (nine pages); audit failed with one high-severity `marked`
-  dependency finding, as expected. No test/lint/typecheck script existed at baseline.
-- Safe candidate: actual **Node 22.23.2** with npm 11.12.1, provisioned with `npm exec --package=node@22.23.2`,
-  ran `npm ci && npm test && npm audit --audit-level=high && npm run build` successfully.
-  **34 native tests passed; zero audit vulnerabilities; nine pages built.**
-  A local Astro-style `npm install` left the manifest/lock unchanged, but the remote Linux
-  run subsequently demonstrated platform-specific lockfile rewriting; CI now avoids that step.
-- Resolved dependencies: Marked 18.0.13, DOMPurify 3.4.15, Astro 7.3.3, direct js-yaml 5.4.2,
-  nested js-yaml 4.3.2, sharp 0.35.4, svgo 4.1.0, devalue 5.9.4. Only Marked and the new sanitizer
-  dependency tree changed in this candidate.
-- Static output check: all nine pages and 92 internal links/assets use the rehearsal base and
-  resolve to built files. Workflow YAML parsing verified the direct pins, job permissions,
-  Node inputs, test/audit steps, and deploy guard.
-- Local browser acceptance passed: all nine navigation targets returned 200, Markdown and
-  anonymous feedback persisted across reloads, name markup remained literal, unsafe HTML/URL
-  content was removed, and corrupt/unavailable/full storage produced visible errors while
-  preserving drafts and existing records. No application errors or missing assets occurred.
-- The fixed light palette now explicitly uses a light color scheme: an OS dark preference no
-  longer creates dark text on a dark canvas. The 390px mobile viewport has no horizontal overflow.
-- These local results do not establish remote CI, Pages deployment, actual scanning alerts,
-  or unverified agent behavior. No external linter/typechecker was added.
+아래는 당시의 검증 기록이며, 현재 한국어화 변경의 테스트나 브라우저 품질 검증 결과가 아닙니다.
+
+- 기준 버전: Node 26.0.0에서 9개 페이지 빌드에 성공했습니다. 감사는 예상대로 `marked` 의존성의
+  높음 수준 취약점 1건으로 실패했습니다. 당시에는 테스트·린트·타입 검사 스크립트가 없었습니다.
+- 안전한 후보: `npm exec --package=node@22.23.2`로 준비한 실제 **Node 22.23.2**와 npm 11.12.1에서
+  `npm ci && npm test && npm audit --audit-level=high && npm run build`를 성공적으로 실행했습니다.
+  **내장 테스트 34개 통과, 감사 취약점 0건, 9개 페이지 빌드 완료**를 확인했습니다.
+  로컬의 Astro 방식 `npm install`은 매니페스트·잠금 파일을 변경하지 않았으나, 이후 원격 Linux 실행에서
+  플랫폼별 잠금 파일 변경이 확인되어 현재 CI는 해당 단계를 피합니다.
+- 확인한 의존성 버전: Marked 18.0.13, DOMPurify 3.4.15, Astro 7.3.3, 직접 의존성 js-yaml 5.4.2,
+  전이 의존성 js-yaml 4.3.2, sharp 0.35.4, svgo 4.1.0, devalue 5.9.4.
+  이 후보에서는 Marked와 새 HTML 정제 라이브러리의 의존성 트리만 변경했습니다.
+- 정적 출력 검사: 9개 페이지와 내부 링크·리소스 92개 모두 리허설 기본 경로를 사용하고 빌드된 파일로
+  연결되었습니다. 워크플로 YAML을 해석해 직접 참조 SHA 고정, 작업 권한, Node 입력값,
+  테스트·감사 단계, 배포 조건을 확인했습니다.
+- 당시 로컬 브라우저 인수 점검 통과: 탐색 대상 9개 모두 응답 코드 200을 반환했고, Markdown 및
+  익명 피드백은 새로고침 후에도 유지되었습니다. 이름의 마크업은 일반 텍스트로 표시되었고,
+  안전하지 않은 HTML·URL은 제거되었습니다. 저장소 손상·사용 불가·용량 초과 시 오류가 표시되면서
+  작성 중인 내용과 기존 기록은 유지되었습니다. 애플리케이션 오류나 누락된 리소스는 없었습니다.
+- 당시 고정된 밝은 색상 팔레트에 밝은 색상 모드를 명시해, 운영체제의 어두운 모드 설정으로 인해
+  어두운 배경에 어두운 글자가 표시되던 문제를 해결했습니다. 너비 390px 모바일 화면에서 가로 넘침은 없었습니다.
+- 이 로컬 결과만으로 원격 CI, GitHub Pages 배포, 실제 보안 검사 경고, 미검증 에이전트 동작을
+  입증할 수는 없습니다. 이후의 사용자 제공 병합·배포 이력은 위에 별도로 구분했습니다.
+  외부 린터나 타입 검사기는 추가하지 않았습니다.

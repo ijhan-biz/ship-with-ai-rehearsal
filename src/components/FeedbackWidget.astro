@@ -2,25 +2,25 @@
 import { MAX_NAME_LENGTH, MAX_MESSAGE_LENGTH, MAX_SUBMISSIONS } from '../lib/feedback.js';
 ---
 <section class="card" id="feedback-widget">
-  <h2>Questions &amp; feedback</h2>
+  <h2>질문과 피드백</h2>
   <p id="feedback-policy">
-    Feedback stays in this browser only; it is not sent to the presenter. Markdown is supported,
-    but embedded HTML controls and images are removed. Names may be blank (Anonymous).
-    Names: {MAX_NAME_LENGTH} characters; messages: {MAX_MESSAGE_LENGTH} characters.
-    Only the latest {MAX_SUBMISSIONS} submissions are kept; a successful save replaces the oldest when full.
+    피드백은 이 브라우저에만 저장되며 발표자에게 전송되지 않습니다. Markdown을 지원하지만,
+    삽입된 HTML 입력 요소와 이미지는 제거됩니다. 이름을 비우면 익명으로 표시됩니다.
+    이름은 {MAX_NAME_LENGTH}자, 메시지는 {MAX_MESSAGE_LENGTH}자까지 입력할 수 있습니다.
+    최근 {MAX_SUBMISSIONS}건만 보관하며, 한도에 도달하면 저장에 성공했을 때 가장 오래된 항목을 교체합니다.
   </p>
   <form id="feedback-form" novalidate>
     <div class="field">
-      <label for="feedback-name">Name</label>
-      <input id="feedback-name" name="name" type="text" placeholder="Ada"
+      <label for="feedback-name">이름</label>
+      <input id="feedback-name" name="name" type="text" placeholder="홍길동"
         maxlength={MAX_NAME_LENGTH} aria-describedby="feedback-policy feedback-error" />
     </div>
     <div class="field">
-      <label for="feedback-message">Message (Markdown supported)</label>
-      <textarea id="feedback-message" name="message" rows="3" placeholder="What did you think?"
+      <label for="feedback-message">메시지 (Markdown 지원)</label>
+      <textarea id="feedback-message" name="message" rows="3" placeholder="세션에 대한 질문이나 의견을 남겨 주세요."
         maxlength={MAX_MESSAGE_LENGTH} required aria-describedby="feedback-policy feedback-error"></textarea>
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit">제출</button>
   </form>
   <p id="feedback-error" role="alert" tabindex="-1" hidden></p>
   <p id="feedback-status" role="status"></p>
@@ -69,7 +69,7 @@ import { MAX_NAME_LENGTH, MAX_MESSAGE_LENGTH, MAX_SUBMISSIONS } from '../lib/fee
   if (!(form instanceof HTMLFormElement) || !(list instanceof HTMLDivElement) ||
       !(nameInput instanceof HTMLInputElement) || !(messageInput instanceof HTMLTextAreaElement) ||
       !(errorMessage instanceof HTMLParagraphElement) || !(status instanceof HTMLParagraphElement)) {
-    throw new Error('Required feedback widget elements are missing.');
+    throw new Error('피드백 위젯에 필요한 요소가 없습니다.');
   }
 
   function showError(error: FeedbackError) {
@@ -86,10 +86,10 @@ import { MAX_NAME_LENGTH, MAX_MESSAGE_LENGTH, MAX_SUBMISSIONS } from '../lib/fee
       item.className = 'feedback-item';
       const meta = document.createElement('div');
       meta.className = 'meta';
-      meta.textContent = `${submission.name || 'Anonymous'} · `;
+      meta.textContent = `${submission.name || '익명'} · `;
       const time = document.createElement('time');
       time.dateTime = submission.submittedAt;
-      time.textContent = new Date(submission.submittedAt).toLocaleString();
+      time.textContent = new Date(submission.submittedAt).toLocaleString('ko-KR');
       meta.append(time);
 
       // Marked parses Markdown; only DOMPurify makes its HTML safe to insert.
@@ -123,7 +123,7 @@ import { MAX_NAME_LENGTH, MAX_MESSAGE_LENGTH, MAX_SUBMISSIONS } from '../lib/fee
     form.reset();
     errorMessage.hidden = true;
     errorMessage.textContent = '';
-    status.textContent = 'Feedback saved in this browser.';
+    status.textContent = '이 브라우저에 피드백을 저장했습니다.';
   });
 
   function load() {
