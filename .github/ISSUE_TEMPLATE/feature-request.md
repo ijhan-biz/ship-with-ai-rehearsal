@@ -1,28 +1,34 @@
 ---
-name: Feature request
-about: Propose a small change to the Ship with AI site (used to kick off the live demo, Beat 0)
-title: "Add Episode 3 lesson page / update the feedback widget"
+name: 기능 요청
+about: Ship with AI 사이트의 소규모 변경 제안(라이브 데모 장면 0의 향후 시작점)
+title: "AI Genius 시즌 5 에피소드 3 학습 페이지 추가 / 피드백 위젯 개선"
 labels: enhancement
 assignees: ''
 ---
 
-## What
+## 요청 내용
 
-Add a short lesson page (or update an existing one) covering the Episode 3 talking point, and
-tighten the feedback widget's markup so it reads cleanly next to the new content.
+AI Genius 시즌 5 에피소드 3의 발표 요점을 담은 짧은 학습 페이지를 추가하거나 기존 페이지를 수정합니다.
+피드백 위젯의 마크업도 새 콘텐츠와 어울리고 읽기 쉽도록 다듬습니다.
 
-## Why
+## 요청 배경
 
-Attendees cloning the repo after the talk should find the lesson content matches what was shown
-live, including whatever the widget looked like by the end of the demo.
+발표 후 저장소를 복제한 참가자가 라이브에서 본 내용과 일치하는 학습 자료를 확인할 수 있어야 합니다.
+피드백 위젯도 데모가 끝났을 때의 모습과 일치해야 합니다.
 
-## Acceptance criteria
+## 완료 기준
 
-- [ ] New/updated page renders under the site nav with a short, translation-friendly write-up
-- [ ] Feedback widget still submits and renders a submission end-to-end
-- [ ] `npm run build` succeeds locally
+- [ ] 추가·수정한 페이지를 사이트 탐색 메뉴에서 열 수 있고, 설명은 짧고 번역하기 쉬움
+- [ ] 피드백 위젯의 입력·브라우저 저장·표시가 계속 작동하며, 서버 전송이나 기기 간 동기화는 없음
+- [ ] 빈 이름은 ‘익명’, 저장 성공 문구는 ‘이 브라우저에 피드백을 저장했습니다.’로 표시
+- [ ] 기존 보안 수정과 보안 게이트를 유지하고 취약점을 다시 도입하지 않음
+- [ ] 손상된 저장소를 자동으로 덮어쓰지 않으며, 복구 시 `ship-with-ai-feedback` 항목을 먼저 백업한 뒤 해당 항목만 삭제하도록 안내
+- [ ] `npm run build`가 로컬에서 성공
 
-## Notes for the assignee
+## 담당자 안내
 
-Assign this to the Copilot coding agent. It's expected to draft a small PR — keep the change
-scoped to one page and/or the widget, not a site-wide rewrite.
+향후 GitHub Copilot 코딩 에이전트에 할당할 경우 작은 풀리퀘스트(PR) 초안을 목표로 합니다.
+범위는 페이지 하나 또는 피드백 위젯으로 제한하고, 사이트 전체를 다시 작성하지 않습니다.
+기존 입력·저장소 검증, DOMPurify 정제, 최소 권한, SHA 고정, 테스트·감사 보안 게이트를 유지합니다.
+이슈 → 클라우드 에이전트와 Agent Merge는 아직 검증되지 않았습니다.
+이 템플릿은 에이전트의 실행·자동 수정·병합이 확인되었다는 뜻이 아닙니다.

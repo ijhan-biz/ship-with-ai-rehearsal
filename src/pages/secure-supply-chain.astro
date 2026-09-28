@@ -2,31 +2,30 @@
 import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
-<Layout title="Secure Your Supply Chain">
-  <h1>Secure your supply chain</h1>
+<Layout title="공급망 보안">
+  <h1>공급망 보안</h1>
   <p>
-    Developers ranked <strong>Software Supply Chain Failures</strong> the #1 risk in OWASP's
-    2025 community survey — roughly half of respondents put it first. It's the modern successor
-    to "using components with known vulnerabilities," widened to cover anything that can go wrong
-    while you <em>build, distribute, or update</em> software: a vulnerable dependency, an
-    unpinned CI/CD action, a leaked token.
+    OWASP의 2025년 커뮤니티 설문에서 개발자들은 <strong>소프트웨어 공급망 실패</strong>를
+    가장 큰 위험으로 꼽았습니다. 응답자의 약 절반이 이를 1위로 선택했습니다.
+    기존의 ‘알려진 취약점이 있는 구성 요소 사용’에서 범위가 넓어진 개념으로,
+    소프트웨어를 <em>빌드·배포·업데이트</em>하는 동안 생길 수 있는 문제를 다룹니다.
+    취약한 의존성, 버전을 고정하지 않은 CI/CD 액션, 유출된 토큰 등이 해당합니다.
   </p>
   <p>
-    The 2025 <strong>Shai-Hulud</strong> npm worm is the real-world version of this: a
-    self-propagating package that harvested developer secrets and npm tokens as it spread.
-    SolarWinds and Log4Shell are the two other names people already know.
+    2025년 <strong>Shai-Hulud</strong> npm 웜은 실제 사례입니다. 스스로 퍼지는 패키지가
+    확산 과정에서 개발자의 시크릿과 npm 토큰을 수집했습니다.
+    SolarWinds와 Log4Shell도 널리 알려진 사례입니다.
   </p>
-  <h2>What actually protects you</h2>
+  <h2>실질적인 보호 방법</h2>
   <ul>
-    <li><strong>Track your dependencies</strong> — know every package you ship, including transitive ones (an SBOM helps).</li>
-    <li><strong>Keep them current</strong> — Dependabot can propose eligible updates when configured; review and test the changes.</li>
-    <li><strong>Pin your Actions</strong> — reference third-party GitHub Actions by full commit SHA, not a floating tag or branch.</li>
-    <li><strong>Least-privilege your tokens</strong> — grant a workflow only the permissions the job needs.</li>
-    <li><strong>Never commit secrets</strong> — push protection can block supported secret patterns, but is not a guarantee that every leak is caught.</li>
+    <li><strong>의존성 파악하기</strong> — 전이 의존성까지 포함해 배포하는 모든 패키지를 파악하세요. 소프트웨어 자재 명세서(SBOM)가 도움이 됩니다.</li>
+    <li><strong>최신 상태 유지하기</strong> — Dependabot을 설정하면 지원되는 업데이트를 제안받을 수 있습니다. 변경 사항을 리뷰하고 테스트하세요.</li>
+    <li><strong>GitHub Actions 고정하기</strong> — 변경될 수 있는 태그나 브랜치 대신 전체 커밋 SHA로 서드파티 GitHub Actions를 참조하세요.</li>
+    <li><strong>토큰에 최소 권한 부여하기</strong> — 워크플로에는 작업에 필요한 권한만 부여하세요.</li>
+    <li><strong>시크릿을 커밋하지 않기</strong> — 푸시 보호는 지원되는 시크릿 패턴을 차단할 수 있지만 모든 유출을 탐지한다고 보장하지는 않습니다.</li>
   </ul>
   <p>
-    None of this requires exotic tooling — it's Dependabot, dependency review, secret scanning,
-    and a little care in how you write workflow YAML. See <a href={`${base}diy/`}>Do it yourself</a>
-    to turn it all on.
+    특별한 도구가 필요한 것은 아닙니다. Dependabot, 의존성 검토, 시크릿 검사를 활용하고
+    워크플로 YAML을 주의 깊게 작성하세요. 설정 방법은 <a href={`${base}diy/`}>직접 해보기</a>에서 확인하세요.
   </p>
 </Layout>

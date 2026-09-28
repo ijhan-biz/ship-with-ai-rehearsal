@@ -13,17 +13,17 @@ export class FeedbackError extends Error {
 
 export function validateInput(name, message) {
   if (typeof name !== 'string' || typeof message !== 'string') {
-    throw new FeedbackError('INVALID_TYPE', 'Name and message must be text.');
+    throw new FeedbackError('INVALID_TYPE', '이름과 메시지는 텍스트여야 합니다.');
   }
   const input = { name: name.trim(), message: message.trim() };
   if (!input.message) {
-    throw new FeedbackError('EMPTY_MESSAGE', 'Enter a message before submitting.');
+    throw new FeedbackError('EMPTY_MESSAGE', '메시지를 입력한 뒤 제출해 주세요.');
   }
   if (input.name.length > MAX_NAME_LENGTH) {
-    throw new FeedbackError('NAME_TOO_LONG', `Name must be ${MAX_NAME_LENGTH} characters or fewer.`);
+    throw new FeedbackError('NAME_TOO_LONG', `이름은 ${MAX_NAME_LENGTH}자 이내로 입력해 주세요.`);
   }
   if (input.message.length > MAX_MESSAGE_LENGTH) {
-    throw new FeedbackError('MESSAGE_TOO_LONG', `Message must be ${MAX_MESSAGE_LENGTH} characters or fewer.`);
+    throw new FeedbackError('MESSAGE_TOO_LONG', `메시지는 ${MAX_MESSAGE_LENGTH}자 이내로 입력해 주세요.`);
   }
   return input;
 }
@@ -31,8 +31,8 @@ export function validateInput(name, message) {
 function corruptStorage(cause) {
   return new FeedbackError(
     'CORRUPT_STORAGE',
-    'Saved feedback is invalid. Nothing was changed. Back up the browser storage entry ' +
-      `"${STORAGE_KEY}", then remove only that entry and reload to start again.`,
+    '저장된 피드백이 올바르지 않습니다. 아무것도 변경하지 않았습니다. 브라우저 저장소의 ' +
+      `"${STORAGE_KEY}" 항목을 백업한 뒤, 해당 항목만 삭제하고 새로고침하여 다시 시작하세요.`,
     { cause },
   );
 }
@@ -80,7 +80,7 @@ function getStorage(storage) {
     } catch (error) {
       throw new FeedbackError(
         'STORAGE_UNAVAILABLE',
-        'Browser storage is unavailable. Allow local storage and try again. Your form has not been cleared.',
+        '브라우저 저장소를 사용할 수 없습니다. 로컬 저장소 접근을 허용한 뒤 다시 시도하세요. 입력한 내용은 지워지지 않았습니다.',
         { cause: error },
       );
     }
@@ -88,7 +88,7 @@ function getStorage(storage) {
   if (!storage || typeof storage.getItem !== 'function' || typeof storage.setItem !== 'function') {
     throw new FeedbackError(
       'STORAGE_UNAVAILABLE',
-      'Browser storage is unavailable. Use a browser with local storage enabled. Your form has not been cleared.',
+      '브라우저 저장소를 사용할 수 없습니다. 로컬 저장소가 활성화된 브라우저를 사용하세요. 입력한 내용은 지워지지 않았습니다.',
     );
   }
   return storage;
@@ -102,7 +102,7 @@ export function loadSubmissions(storage) {
   } catch (error) {
     throw new FeedbackError(
       'STORAGE_READ',
-      'Could not read saved feedback. Check browser storage permissions and try again. Nothing was changed.',
+      '저장된 피드백을 읽을 수 없습니다. 브라우저 저장소 권한을 확인한 뒤 다시 시도하세요. 아무것도 변경하지 않았습니다.',
       { cause: error },
     );
   }
@@ -125,8 +125,8 @@ export function saveSubmission(name, message, storage) {
     throw new FeedbackError(
       quotaExceeded ? 'STORAGE_QUOTA' : 'STORAGE_WRITE',
       quotaExceeded
-        ? 'Browser storage is full. Free some space and try again. Your message was not saved; your form has not been cleared.'
-        : 'Could not save feedback. Check browser storage permissions and try again. Your form has not been cleared.',
+        ? '브라우저 저장소가 가득 찼습니다. 공간을 확보한 뒤 다시 시도하세요. 메시지는 저장되지 않았으며, 입력한 내용은 지워지지 않았습니다.'
+        : '피드백을 저장할 수 없습니다. 브라우저 저장소 권한을 확인한 뒤 다시 시도하세요. 입력한 내용은 지워지지 않았습니다.',
       { cause: error },
     );
   }

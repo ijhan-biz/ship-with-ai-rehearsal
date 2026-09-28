@@ -4,28 +4,28 @@ import FeedbackWidget from '../components/FeedbackWidget.astro';
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 <Layout title="Ship with AI">
-  <h1>Ship with AI: Review, Secure, and Deploy with Confidence</h1>
+  <h1>Ship with AI: AI로 완성하는 코드 리뷰부터 보안, 배포까지</h1>
   <p>
-    AI writes more code, faster than ever. That's the easy part. The hard part — the part that
-    decides whether shipping with AI is safe — is what happens next: who reviews it, who secures
-    it, and how it gets from a pull request to production without anyone's attention slipping.
+    AI는 그 어느 때보다 많은 코드를 빠르게 작성합니다. 하지만 코드를 만드는 것은 시작일 뿐입니다.
+    AI로 만든 코드를 안전하게 배포하려면 그다음이 중요합니다. 누가 검토하고, 누가 보안을 확인하며,
+    풀리퀘스트(PR)부터 운영 환경까지 빠짐없이 살필 수 있을까요?
   </p>
   <p>
-    This site is both things at once. It's the companion material for AI Genius Season 5,
-    Episode 3, and a rehearsal repository for reviewing, securing, and deploying a small site.
-    Automatic code review has been demonstrated separately; Issue → cloud agent and Agent Merge
-    are not yet verified. This safe version uses an approved manual merge, not a claimed automated fix-and-merge.
+    이 사이트는 AI Genius 시즌 5 에피소드 3의 참고 자료이자, 작은 사이트의 코드 리뷰·보안 검토·배포를
+    연습하는 리허설 저장소입니다. 자동 코드 리뷰는 별도로 시연했지만, 이슈 → 클라우드 에이전트와
+    Agent Merge는 아직 검증하지 않았습니다. 이 안전한 버전은 승인된 수동 병합을 사용하며,
+    자동으로 수정하고 병합했다고 주장하지 않습니다.
   </p>
   <div class="card">
-    <strong>The trust gap.</strong> The more code an AI assistant produces, the more your review,
-    security, and release process has to carry. Speed without those guardrails just moves risk
-    downstream — into your dependencies, your CI/CD pipeline, and your production environment.
+    <strong>신뢰를 확보하려면.</strong> AI 도우미가 만드는 코드가 많아질수록 코드 리뷰, 보안 검토,
+    릴리스 절차의 역할도 커집니다. 이런 안전장치 없이 속도만 높이면 위험이 의존성,
+    CI/CD 파이프라인, 운영 환경으로 옮겨갈 뿐입니다.
   </div>
-  <h2>Where to start</h2>
+  <h2>시작하기</h2>
   <ul>
-    <li><a href={`${base}pipeline/`}>The pipeline</a> — how an idea becomes a deployed change</li>
-    <li><a href={`${base}secure-supply-chain/`}>Secure your supply chain</a> — the security spine of this demo</li>
-    <li><a href={`${base}diy/`}>Do it yourself</a> — plan the setup for your own repo</li>
+    <li><a href={`${base}pipeline/`}>파이프라인</a> — 아이디어가 실제 배포로 이어지는 과정</li>
+    <li><a href={`${base}secure-supply-chain/`}>공급망 보안</a> — 이 데모의 핵심 보안 원칙</li>
+    <li><a href={`${base}diy/`}>직접 해보기</a> — 내 저장소에 적용할 설정 준비하기</li>
   </ul>
   <FeedbackWidget />
 </Layout>

@@ -4,17 +4,17 @@ import Layout from '../../layouts/Layout.astro';
 <Layout title="Agent Merge">
   <h1>Agent Merge</h1>
   <p>
-    An agent that fixes review findings and then merges a change is a separate capability from
-    GitHub's ordinary auto-merge. Agent Merge has not been verified in this rehearsal.
-    No workflow here impersonates an agent or automatically implements review fixes.
+    리뷰에서 발견한 문제를 수정하고 변경 사항을 병합하는 에이전트 기능은 GitHub의 일반 자동 병합과
+    별개입니다. 이 리허설에서는 Agent Merge를 검증하지 않았습니다.
+    이 저장소에는 에이전트인 것처럼 동작하거나 리뷰 지적 사항을 자동으로 수정하는 워크플로가 없습니다.
   </p>
   <p>
-    The repository setting <code>allow_auto_merge</code> only allows eligible pull requests to use
-    ordinary auto-merge after requirements are met. It does not enable Agent Merge, resolve
-    review findings, or prove who made a fix. Dependabot updates still need review and tests.
+    저장소 설정 <code>allow_auto_merge</code>는 조건을 충족한 풀리퀘스트(PR)에 일반 자동 병합을
+    허용할 뿐입니다. Agent Merge를 활성화하거나 리뷰 지적 사항을 해결하지 않으며,
+    누가 수정했는지를 증명하지도 않습니다. Dependabot 업데이트에도 리뷰와 테스트가 필요합니다.
   </p>
   <div class="card">
-    For this safe rehearsal, show the proposed diff and passing checks, then use a manual merge
-    only after explicit approval. Do not describe that as an automated or agent-performed merge.
+    이 안전한 리허설에서는 제안한 변경 사항과 통과한 검증 결과를 보여 준 뒤, 명시적인 승인을 받은
+    경우에만 수동으로 병합하세요. 이를 자동 병합이나 에이전트가 수행한 병합으로 설명하지 마세요.
   </div>
 </Layout>

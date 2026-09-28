@@ -3,14 +3,14 @@ interface Props {
   title: string;
   description?: string;
 }
-const { title, description = 'Ship with AI: Review, Secure, and Deploy with Confidence.' } = Astro.props;
+const { title, description = 'Ship with AI: AI로 완성하는 코드 리뷰부터 보안, 배포까지' } = Astro.props;
 // BASE_URL doesn't always carry a trailing slash (e.g. "/ship-with-ai"), which
 // broke nav links (they concatenated into "/ship-with-aipipeline/"). Normalise it.
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 ---
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,21 +21,21 @@ const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
     <header class="site-header">
       <a class="brand" href={base}>Ship with AI</a>
       <nav>
-        <a href={`${base}pipeline/`}>Pipeline</a>
-        <a href={`${base}capabilities/copilot-code-review/`}>Code Review</a>
+        <a href={`${base}pipeline/`}>파이프라인</a>
+        <a href={`${base}capabilities/copilot-code-review/`}>코드 리뷰</a>
         <a href={`${base}capabilities/agent-merge/`}>Agent Merge</a>
-        <a href={`${base}capabilities/github-actions/`}>Actions</a>
-        <a href={`${base}capabilities/security-review/`}>Security</a>
-        <a href={`${base}capabilities/lifecycle-automation/`}>Lifecycle</a>
-        <a href={`${base}secure-supply-chain/`}>Supply Chain</a>
-        <a href={`${base}diy/`}>Do It Yourself</a>
+        <a href={`${base}capabilities/github-actions/`}>GitHub Actions</a>
+        <a href={`${base}capabilities/security-review/`}>보안 검토</a>
+        <a href={`${base}capabilities/lifecycle-automation/`}>개발 생애주기</a>
+        <a href={`${base}secure-supply-chain/`}>공급망 보안</a>
+        <a href={`${base}diy/`}>직접 해보기</a>
       </nav>
     </header>
     <main>
       <slot />
     </main>
     <footer class="site-footer">
-      <p>AI Genius — Season 5, Episode 3: "Ship with AI: Review, Secure, and Deploy with Confidence."</p>
+      <p>AI Genius — 시즌 5 에피소드 3: "Ship with AI: AI로 완성하는 코드 리뷰부터 보안, 배포까지"</p>
     </footer>
     <style>
       :root {
@@ -52,6 +52,8 @@ const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
         font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
         color: var(--fg);
         line-height: 1.6;
+        word-break: keep-all;
+        overflow-wrap: anywhere;
       }
       .site-header {
         display: flex;
@@ -77,7 +79,7 @@ const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
         padding: 2rem 1rem;
         border-top: 1px solid var(--border);
       }
-      h1 { font-size: 1.9rem; }
+      h1 { font-size: 1.9rem; text-wrap: balance; }
       h2 { font-size: 1.3rem; margin-top: 2rem; }
       code { background: rgba(110,118,129,0.15); padding: 0.1rem 0.35rem; border-radius: 4px; }
       pre { background: #24292e; color: #e1e4e8; padding: 1rem; border-radius: 8px; overflow-x: auto; }
